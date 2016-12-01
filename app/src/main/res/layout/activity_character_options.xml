@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_character_options"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.mysterygameapp.CharacterOptions">
+
+    <TextView
+        android:id="@+id/characterOptHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Choose Your Character"
+        android:textSize="30dp"
+        android:gravity="center"/>
+
+    <Button
+        android:id = "@+id/characterSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginRight="70dp"
+        android:layout_alignParentBottom="true"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        android:layout_below="@+id/characterOptHeader"
+        android:layout_above="@+id/characterSubmit">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/ivChar1"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/char1"
+                android:layout_marginTop="20dp"/>
+
+            <TextView
+                android:id="@+id/tvChar1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/ivChar1"
+                android:layout_alignTop="@+id/ivChar1"
+                android:lines="4"
+                android:layout_marginLeft="10dp"/>
+
+            <Switch
+                android:id="@+id/swChar1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvChar1"
+                android:layout_alignParentRight="true"
+                android:layout_alignLeft="@+id/tvChar1"
+                android:layout_marginRight="30dp"
+                android:layout_alignBottom="@+id/ivChar1"
+                android:scaleX="1.0"
+                android:scaleY="1.0"
+                android:textOff=""
+                android:textOn="Selected"/>
+
+            <ImageView
+                android:id="@+id/ivChar2"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_below="@+id/ivChar1"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/char2"/>
+
+            <TextView
+                android:id="@+id/tvChar2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/ivChar2"
+                android:layout_alignTop="@+id/ivChar2"
+                android:lines="4"
+                android:layout_marginLeft="10dp"
+                android:layout_below="@+id/tvChar1"/>
+
+            <Switch
+                android:id="@+id/swChar2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvChar2"
+                android:layout_alignParentRight="true"
+                android:layout_alignLeft="@+id/tvChar2"
+                android:layout_marginRight="30dp"
+                android:layout_alignBottom="@+id/ivChar2"
+                android:scaleX="1.0"
+                android:scaleY="1.0"
+                android:textOff=""
+                android:textOn="Selected"/>
+
+            <ImageView
+                android:id="@+id/ivChar3"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_below="@+id/ivChar2"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/char3"/>
+
+            <TextView
+                android:id="@+id/tvChar3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/ivChar3"
+                android:layout_alignTop="@+id/ivChar3"
+                android:lines="4"
+                android:layout_marginLeft="10dp"
+                android:layout_below="@+id/tvChar2"/>
+
+            <Switch
+                android:id="@+id/swChar3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvChar3"
+                android:layout_alignParentRight="true"
+                android:layout_alignLeft="@+id/tvChar3"
+                android:layout_marginRight="30dp"
+                android:layout_alignBottom="@+id/ivChar3"
+                android:scaleX="1.0"
+                android:scaleY="1.0"
+                android:textOff=""
+                android:textOn="Selected"/>
+
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>
