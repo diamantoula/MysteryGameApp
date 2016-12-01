@@ -1,4 +1,4 @@
-package com.example.mysterygameapp;
+package com.example.mysterygameapp.loginregister;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.example.mysterygameapp.R;
+import com.example.mysterygameapp.StartOptions;
 
 public class Login extends AppCompatActivity implements View.OnClickListener{
 

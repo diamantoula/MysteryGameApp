@@ -9,6 +9,8 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.example.mysterygameapp.loginregister.Login;
+
 public class CharacterOptions extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     Switch swChar1;

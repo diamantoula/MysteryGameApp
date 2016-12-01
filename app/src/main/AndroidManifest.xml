@@ -57,9 +57,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".Login">
+        <activity android:name=".loginregister.Login">
         </activity>
-        <activity android:name=".Register">
+        <activity android:name=".loginregister.Register">
         </activity>
         <activity android:name=".MapDemoActivity">
         </activity>

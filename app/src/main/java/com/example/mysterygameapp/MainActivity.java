@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.mysterygameapp.loginregister.Login;
+import com.example.mysterygameapp.loginregister.Register;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     @Override
