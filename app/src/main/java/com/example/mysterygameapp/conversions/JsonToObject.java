@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class JsonToObject {
 
-    public ArrayList<Object> toItem(String strToConvert) throws JSONException {
+    /*public ArrayList<Object> toItem(String strToConvert) throws JSONException {
 
         JSONObject parentObj = new JSONObject(strToConvert);
         JSONArray parentArray = parentObj.getJSONArray("items");
@@ -53,6 +53,6 @@ public class JsonToObject {
         }
 
         return npcList;
-    }
+    }*/
 
 }
