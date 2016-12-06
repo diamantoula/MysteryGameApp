@@ -1,6 +1,6 @@
 package com.example.mysterygameapp.conversions;
 
-import com.example.mysterygameapp.modelsDB.Item;
+import com.example.mysterygameapp.modelsDB.Object;
 import com.example.mysterygameapp.modelsDB.NPC;
 
 import org.json.JSONArray;
@@ -11,26 +11,26 @@ import java.util.ArrayList;
 
 public class JsonToObject {
 
-    public ArrayList<Item> toItem(String strToConvert) throws JSONException {
+    public ArrayList<Object> toItem(String strToConvert) throws JSONException {
 
         JSONObject parentObj = new JSONObject(strToConvert);
         JSONArray parentArray = parentObj.getJSONArray("items");
 
-        ArrayList<Item> itemList = new ArrayList<>();
+        ArrayList<Object> objectList = new ArrayList<>();
 
         for (int i=0; i<parentArray.length(); i++){
             JSONObject object = parentArray.getJSONObject(i);
 
-            Item item = new Item();
+            Object item = new Object();
             item.setId(object.getInt("id"));
             item.setName(object.getString("name"));
             item.setLat(object.getDouble("lat"));
             item.setLng(object.getDouble("lng"));
 
-            itemList.add(item);
+            objectList.add(item);
         }
 
-        return itemList;
+        return objectList;
     }
 
     public ArrayList<NPC> toNPC(String strToConvert) throws JSONException {
