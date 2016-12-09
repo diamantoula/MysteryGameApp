@@ -12,11 +12,11 @@
     tools:context="com.example.mysterygameapp.loginregister.Login">
 
     <EditText
-        android:id="@+id/loginEmail"
+        android:id="@+id/loginUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
+        android:hint="Username"
+        android:inputType="text"
         android:gravity="center"
         android:layout_marginTop="100dp"
         android:layout_marginLeft="30dp"
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:hint="Password"
         android:inputType="textPassword"
-        android:layout_below="@+id/loginEmail"
+        android:layout_below="@+id/loginUsername"
         android:gravity="center"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="30dp"

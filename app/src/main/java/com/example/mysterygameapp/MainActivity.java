@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.loginMain:
                 startActivity(new Intent(MainActivity.this, Login.class));
-                //startActivity(new Intent(MainActivity.this, MyAsyncTask.class));
                 break;
 
             case R.id.registerMain:
