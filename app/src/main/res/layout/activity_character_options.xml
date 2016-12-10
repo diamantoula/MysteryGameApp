@@ -104,12 +104,12 @@
                 android:textOn="Selected"/>
 
             <ImageView
-                android:id="@+id/ivChar3"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_below="@+id/ivChar2"
-                android:layout_marginTop="20dp"
-                android:src="@drawable/char3"/>
+            android:id="@+id/ivChar3"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_below="@+id/ivChar2"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/char3"/>
 
             <TextView
                 android:id="@+id/tvChar3"
@@ -130,6 +130,38 @@
                 android:layout_alignLeft="@+id/tvChar3"
                 android:layout_marginRight="30dp"
                 android:layout_alignBottom="@+id/ivChar3"
+                android:scaleX="1.0"
+                android:scaleY="1.0"
+                android:textOff=""
+                android:textOn="Selected"/>
+
+            <ImageView
+                android:id="@+id/ivChar4"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_below="@+id/ivChar3"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/char4"/>
+
+            <TextView
+                android:id="@+id/tvChar4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/ivChar4"
+                android:layout_alignTop="@+id/ivChar4"
+                android:lines="4"
+                android:layout_marginLeft="10dp"
+                android:layout_below="@+id/tvChar3"/>
+
+            <Switch
+                android:id="@+id/swChar4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvChar4"
+                android:layout_alignParentRight="true"
+                android:layout_alignLeft="@+id/tvChar4"
+                android:layout_marginRight="30dp"
+                android:layout_alignBottom="@+id/ivChar4"
                 android:scaleX="1.0"
                 android:scaleY="1.0"
                 android:textOff=""

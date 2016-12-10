@@ -11,8 +11,10 @@ import android.widget.EditText;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.example.mysterygameapp.CharacterOptions;
 import com.example.mysterygameapp.R;
 import com.example.mysterygameapp.StartOptions;
+import com.example.mysterygameapp.singletons.SingletonUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,7 +47,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         username = etUsername.getText().toString();
         password = etPassword.getText().toString();
 
-        Response.Listener<String> responseListener = new Response.Listener<String>() {
+        /*Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
@@ -58,6 +60,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                     if(success)
                     {
                         String mail = jsonResponse.getString("mail");
+
+                        SingletonUser singletonUser = new SingletonUser(
+                                jsonResponse.getString("username"),
+                                jsonResponse.getString("password"),
+                                jsonResponse.getInt("count"),
+                                jsonResponse.getInt("char_id") );
+
                         startActivity(new Intent(Login.this, StartOptions.class));
 
                     }else{
@@ -77,7 +86,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
 
         LoginRequest loginRequest = new LoginRequest(username, password, responseListener);
         RequestQueue queue = Volley.newRequestQueue(Login.this);
-        queue.add(loginRequest);
+        queue.add(loginRequest);*/
+
+        startActivity(new Intent(Login.this, StartOptions.class));
 
     }
 
