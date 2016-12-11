@@ -1,12 +1,19 @@
 package com.example.mysterygameapp.handlers;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.media.ResourceBusyException;
+
+import com.android.volley.toolbox.StringRequest;
+import com.example.mysterygameapp.MapDemoActivity;
+import com.example.mysterygameapp.R;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MarkersHandler {
+public class MarkersHandler extends MapDemoActivity {
 
     public Marker setUserOnMap(GoogleMap map, LatLng location){
 
@@ -23,48 +30,55 @@ public class MarkersHandler {
 
         Marker m1 = map.addMarker(new MarkerOptions()
                 .position(new LatLng(41.086316, 23.547215))
-                .title("1")
+                .title("obj1")
+                .snippet("")
+                .visible(true)
         );
-        m1.setTag(1);
-        //markersList.add(m1);
 
         Marker m2 = map.addMarker(new MarkerOptions()
                 .position(new LatLng(41.086652, 23.546853))
-                .title("2")
+                .title("obj2")
+                .snippet("")
+                .visible(true)
         );
-        m2.setTag(2);
-        //markersList.add(m2);
 
         Marker m3 = map.addMarker(new MarkerOptions()
                 .position(new LatLng(41.086409, 23.546440))
-                .title("3")
+                .title("obj3")
+                .snippet("")
+                .visible(true)
         );
-        m3.setTag(3);
-        //markersList.add(m3);
 
         Marker m4 = map.addMarker(new MarkerOptions()
                 .position(new LatLng(41.086172, 23.546035))
-                .title("4")
+                .title("obj4")
+                .snippet("")
+                .visible(true)
         );
-        m4.setTag(4);
-        //markersList.add(m4);
 
         Marker m5 = map.addMarker(new MarkerOptions()
                 .position(new LatLng(41.086586, 23.545613))
-                .title("5")
+                .title("obj5")
+                .snippet("")
+                .visible(true)
         );
-        m5.setTag(5);
-        //markersList.add(m5);
     }
 
     public void highlightMarker(Marker marker){
-
         marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
     }
 
     public void removeMarker(Marker marker){
-
         marker.remove();
     }
+
+    public void setInvisible(Marker marker) {
+        marker.setVisible(false);
+    }
+
+    public void setSnippet (Marker marker, String title, int tag, Resources res) {
+
+    }
+
 
 }

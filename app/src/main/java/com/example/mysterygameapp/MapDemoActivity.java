@@ -11,6 +11,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.mysterygameapp.handlers.CameraHandler;
@@ -26,8 +32,10 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
@@ -48,9 +56,10 @@ public class MapDemoActivity extends AppCompatActivity implements
 
 	private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 
-	//private static LatLng userLocation;
-	private static LatLng virtualUser;
+	private static LatLng userLocation;
 	private static Marker userMarker;
+
+	private static int markerClickCount = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -83,44 +92,40 @@ public class MapDemoActivity extends AppCompatActivity implements
 			Toast.makeText(this, "GPS location was found!", Toast.LENGTH_SHORT).show();
 			LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 
-			virtualUser = new LatLng(41.086031, 23.546883);
+			//userLocation = new LatLng(41.086031, 23.546883);
+			userLocation = latLng;
 
 			MarkersHandler markersHandler = new MarkersHandler();
-			userMarker = markersHandler.setUserOnMap(map, virtualUser);
+			userMarker = markersHandler.setUserOnMap(map, userLocation);
 			markersHandler.setMarkersOnMap(map);
 
-			new CameraHandler().setCamera(map, virtualUser);
+			new CameraHandler().setCamera(map, userLocation);
 
 			map.setOnMarkerClickListener(this);
 
 		} else {
 			Toast.makeText(this, "Current location was null, enable GPS on emulator!", Toast.LENGTH_SHORT).show();
 		}
-		/*
+
 		startLocationUpdates();
-		*/
+
 	}
 
 	@Override
-	public boolean onMarkerClick(Marker clickedMarker) {  // final ???
-
-		//Integer tag = (Integer) clickedMarker.getTag();
+	public boolean onMarkerClick(Marker clickedMarker) {
 
 		MarkersHandler markersHandler = new MarkersHandler();
-		//when user clicks on a marker his position changes, so remove userMarker
-		markersHandler.removeMarker(userMarker);
 
-		markersHandler.highlightMarker(clickedMarker);
+			//the marker clicked is the user's new position
+			userLocation = new LatLng(clickedMarker.getPosition().latitude, clickedMarker.getPosition().longitude);
+			userMarker = markersHandler.setUserOnMap(map, userLocation);
 
-		//the marker clicked is the user's new position
-		virtualUser = new LatLng(clickedMarker.getPosition().latitude, clickedMarker.getPosition().longitude);;
 
+		markerClickCount++;
 
 		// Return false to indicate that we have not consumed the event and that we wish for the default behavior to occur
 		return false;
 	}
-
-
 
 
 
@@ -242,7 +247,7 @@ public class MapDemoActivity extends AppCompatActivity implements
 		//update user's location
 		//userLocation = latLng;
 
-		Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+		//Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
 
 	}
 

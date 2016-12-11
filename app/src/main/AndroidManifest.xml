@@ -71,6 +71,8 @@
         </activity>
         <activity android:name=".test.Test">
         </activity>
+        <activity android:name=".Interaction">
+        </activity>
     </application>
 
 </manifest>
