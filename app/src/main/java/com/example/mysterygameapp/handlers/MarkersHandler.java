@@ -7,11 +7,16 @@ import android.media.ResourceBusyException;
 import com.android.volley.toolbox.StringRequest;
 import com.example.mysterygameapp.MapDemoActivity;
 import com.example.mysterygameapp.R;
+import com.example.mysterygameapp.modelsDB.NPC;
+import com.example.mysterygameapp.modelsDB.Object;
+import com.example.mysterygameapp.singletons.SingletonMarkers;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.ArrayList;
 
 public class MarkersHandler extends MapDemoActivity {
 
@@ -28,45 +33,37 @@ public class MarkersHandler extends MapDemoActivity {
 
     public void setMarkersOnMap(GoogleMap map){
 
-        Marker m1 = map.addMarker(new MarkerOptions()
-                .position(new LatLng(41.086316, 23.547215))
-                .title("obj1")
-                .snippet("")
-                .visible(true)
-        );
+        ArrayList<Object> objs = new SingletonMarkers().getObjects();
+        ArrayList<NPC> npcs = new SingletonMarkers().getNPCs();
+        Marker marker;
+        LatLng latLng;
 
-        Marker m2 = map.addMarker(new MarkerOptions()
-                .position(new LatLng(41.086652, 23.546853))
-                .title("obj2")
-                .snippet("")
-                .visible(true)
-        );
+        //objects
+        for (int i=0; i<5; i++) {
+            latLng = new LatLng(objs.get(i).getLat(), objs.get(i).getLng());
+            marker = map.addMarker(new MarkerOptions()
+                    .position(latLng)
+                    .title("You found an Object")
+                    .snippet("this is a " + objs.get(i).getObjName())
+                    .visible(true)
+                    .alpha(1.0f)
+            );
+        }
 
-        Marker m3 = map.addMarker(new MarkerOptions()
-                .position(new LatLng(41.086409, 23.546440))
-                .title("obj3")
-                .snippet("")
-                .visible(true)
-        );
-
-        Marker m4 = map.addMarker(new MarkerOptions()
-                .position(new LatLng(41.086172, 23.546035))
-                .title("obj4")
-                .snippet("")
-                .visible(true)
-        );
-
-        Marker m5 = map.addMarker(new MarkerOptions()
-                .position(new LatLng(41.086586, 23.545613))
-                .title("obj5")
-                .snippet("")
-                .visible(true)
-        );
+        //npcs
+        for (int i=0; i<5; i++) {
+            latLng = new LatLng(npcs.get(i).getLat(), npcs.get(i).getLng());
+            marker = map.addMarker(new MarkerOptions()
+                    .position(latLng)
+                    .title(npcs.get(i).getNPCName())
+                    .snippet("Hello Detective...")
+                    .visible(true)
+                    .alpha(1.0f)
+            );
+        }
     }
 
-    public void highlightMarker(Marker marker){
-        marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
-    }
+    public void setOpacity(Marker marker){ marker.setAlpha(0.4f); }
 
     public void removeMarker(Marker marker){
         marker.remove();
@@ -76,7 +73,7 @@ public class MarkersHandler extends MapDemoActivity {
         marker.setVisible(false);
     }
 
-    public void setSnippet (Marker marker, String title, int tag, Resources res) {
+    public void setSnippet (Marker marker, Resources res) {
 
     }
 

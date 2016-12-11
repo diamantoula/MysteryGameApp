@@ -92,7 +92,6 @@ public class MapDemoActivity extends AppCompatActivity implements
 			Toast.makeText(this, "GPS location was found!", Toast.LENGTH_SHORT).show();
 			LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 
-			//userLocation = new LatLng(41.086031, 23.546883);
 			userLocation = latLng;
 
 			MarkersHandler markersHandler = new MarkersHandler();
@@ -116,9 +115,11 @@ public class MapDemoActivity extends AppCompatActivity implements
 
 		MarkersHandler markersHandler = new MarkersHandler();
 
-			//the marker clicked is the user's new position
-			userLocation = new LatLng(clickedMarker.getPosition().latitude, clickedMarker.getPosition().longitude);
-			userMarker = markersHandler.setUserOnMap(map, userLocation);
+		//the marker clicked is the user's new position
+		userLocation = new LatLng(clickedMarker.getPosition().latitude, clickedMarker.getPosition().longitude);
+		userMarker.remove();
+		markersHandler.setOpacity(clickedMarker);
+
 
 
 		markerClickCount++;

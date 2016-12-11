@@ -1,5 +1,7 @@
 package com.example.mysterygameapp.modelsDB;
 
+import java.util.ArrayList;
+
 public class NPC {
 
     private int npc_id;

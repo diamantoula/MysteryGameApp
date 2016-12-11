@@ -2,16 +2,16 @@ package com.example.mysterygameapp.singletons;
 
 public class SingletonUser {
 
-    private String username;
-    private String password;
-    private int count;
-    private int char_id;
+    private static String username;
+    private static String password;
+    private static int count;
+    private static int char_id;
 
     public SingletonUser(){
-        username = "";
-        password = "";
+        username = "k";
+        password = "123";
         count = 0;
-        char_id = -1;
+        char_id = 2;
     }
 
     public SingletonUser(String username1, String password1, int count1, int charId1){

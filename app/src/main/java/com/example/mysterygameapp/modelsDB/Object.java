@@ -1,5 +1,9 @@
 package com.example.mysterygameapp.modelsDB;
 
+import com.example.mysterygameapp.singletons.SingletonMarkers;
+
+import java.util.ArrayList;
+
 public class Object {
 
     private int obj_id;
