@@ -5,11 +5,11 @@
     android:id="@+id/activity_start_options"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.mysterygameapp.StartOptions">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
 
     <Button
         android:id = "@+id/startBtn"
@@ -19,7 +19,8 @@
         android:gravity="center"
         android:layout_marginTop="50dp"
         android:layout_marginLeft="70dp"
-        android:layout_marginRight="70dp"/>
+        android:layout_marginRight="70dp"
+        android:layout_below="@+id/toolbar"/>
 
     <Button
         android:id = "@+id/resumeBtn"

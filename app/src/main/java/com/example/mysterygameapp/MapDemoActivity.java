@@ -181,7 +181,7 @@ public class MapDemoActivity extends AppCompatActivity implements
 
 				return true;
 			case R.id.action_logout:
-
+				startActivity(new Intent(MapDemoActivity.this, MainActivity.class));
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);

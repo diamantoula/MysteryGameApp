@@ -66,7 +66,7 @@ public class UserProfile extends AppCompatActivity {
 
                 return true;
             case R.id.action_logout:
-
+                startActivity(new Intent(UserProfile.this, MainActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

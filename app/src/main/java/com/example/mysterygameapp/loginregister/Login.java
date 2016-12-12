@@ -7,14 +7,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.mysterygameapp.CharacterOptions;
+import com.example.mysterygameapp.MainActivity;
 import com.example.mysterygameapp.R;
 import com.example.mysterygameapp.StartOptions;
+import com.example.mysterygameapp.modelsDB.User;
 import com.example.mysterygameapp.singletons.SingletonUser;
+import com.example.mysterygameapp.staticData.UserData;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,10 +32,14 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
     private String username;
     private String password;
 
+    private static User user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        user = UserData.getUser();
 
         etUsername = (EditText) findViewById(R.id.loginUsername);
         etPassword = (EditText) findViewById(R.id.loginPassword);
@@ -41,11 +49,20 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
 
     }
 
+
     @Override
     public void onClick(View v) {
 
         username = etUsername.getText().toString();
         password = etPassword.getText().toString();
+
+        if ( username.equals(user.getUsername()) && password.equals(user.getPassword()) ) {
+            startActivity(new Intent(Login.this, StartOptions.class));
+        } else {
+            Toast.makeText(this, "Incorrect Username or Password.\nTry again", Toast.LENGTH_SHORT).show();
+            etUsername.setText("");
+            etPassword.setText("");
+        }
 
         /*Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
@@ -86,9 +103,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
 
         LoginRequest loginRequest = new LoginRequest(username, password, responseListener);
         RequestQueue queue = Volley.newRequestQueue(Login.this);
-        queue.add(loginRequest);*/
-
-        startActivity(new Intent(Login.this, StartOptions.class));
+        queue.add(loginRequest); */
 
     }
 

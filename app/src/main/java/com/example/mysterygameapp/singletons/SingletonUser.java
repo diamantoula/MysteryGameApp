@@ -1,6 +1,8 @@
 package com.example.mysterygameapp.singletons;
 
+import com.example.mysterygameapp.UserProfile;
 import com.example.mysterygameapp.modelsDB.User;
+import com.example.mysterygameapp.staticData.UserData;
 
 public class SingletonUser {
 
@@ -11,14 +13,23 @@ public class SingletonUser {
     private static int count;
     private static int char_id;
 
-    public SingletonUser(){
+    public SingletonUser (){
+        user_id = UserData.getUserId();
+        username = UserData.getUsername();
+        password = UserData.getPassword();
+        mail = UserData.getMail();
+        count = UserData.getCount();
+        char_id = UserData.getCharId();
+    }
+
+    /*public SingletonUser(){
         user_id = -1;
         username = "";
         password = "";
         mail = "";
         count = 0;
         char_id = -1;
-    }
+    }*/
 
     public SingletonUser(int id1, String username1, String password1, String mail1, int count1, int charId1){
         user_id = id1;
@@ -27,15 +38,6 @@ public class SingletonUser {
         mail = mail1;
         count = count1;
         char_id = charId1;
-    }
-
-    public SingletonUser (User user) {
-        user_id = user.getUserId();
-        username = user.getUsername();
-        password = user.getPassword();
-        mail = user.getMail();
-        count = user.getCount();
-        char_id = user.getCharId();
     }
 
     public static int getUserId() { return user_id; }

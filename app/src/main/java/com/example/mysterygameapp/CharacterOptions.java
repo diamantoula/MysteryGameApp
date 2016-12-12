@@ -79,24 +79,28 @@ public class CharacterOptions extends AppCompatActivity implements View.OnClickL
                     swChar2.setChecked(false);
                     swChar3.setChecked(false);
                     swChar4.setChecked(false);
+                    //SingletonUser.setCharId(1);
                     break;
 
                 case R.id.swChar2:
                     swChar1.setChecked(false);
                     swChar3.setChecked(false);
                     swChar4.setChecked(false);
+                    //SingletonUser.setCharId(2);
                     break;
 
                 case R.id.swChar3:
                     swChar1.setChecked(false);
                     swChar2.setChecked(false);
                     swChar4.setChecked(false);
+                    //SingletonUser.setCharId(3);
                     break;
 
                 case R.id.swChar4:
                     swChar1.setChecked(false);
                     swChar2.setChecked(false);
                     swChar3.setChecked(false);
+                    //SingletonUser.setCharId(4);
                     break;
             }
         }
