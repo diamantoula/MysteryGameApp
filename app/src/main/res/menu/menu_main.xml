@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_back"
+        android:title="Go Back..."
+        android:icon="@drawable/ic_action_left_arrow"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_dropdown"
+        android:title="Options"
+        android:icon="@drawable/ic_action_dropdown"
+        app:showAsAction="never">
+
+        <item
+            android:id="@+id/action_profile"
+            android:title="Profile"
+            android:icon="@drawable/ic_action_profile"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_settings"
+            android:title="Settings"
+            android:icon="@drawable/ic_action_settings"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_logout"
+            android:title="Logout"
+            app:showAsAction="never"/>
+
+    </item>
+
+
+</menu>

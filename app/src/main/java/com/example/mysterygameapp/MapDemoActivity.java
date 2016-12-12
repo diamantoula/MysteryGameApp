@@ -9,8 +9,13 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Toast;
+import android.app.ActionBar;
 
 import com.android.volley.toolbox.StringRequest;
 import com.example.mysterygameapp.handlers.CameraHandler;
@@ -51,10 +56,15 @@ public class MapDemoActivity extends AppCompatActivity implements
 	private static Marker userMarker;
 	private static SingletonData data;
 
+	Toolbar toolbar;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.map_demo_activity);
+
+		toolbar = (Toolbar) findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
 
 		mapFragment = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map));
 		if (mapFragment != null) {
@@ -134,8 +144,38 @@ public class MapDemoActivity extends AppCompatActivity implements
 	}
 
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
 
+		MenuInflater menuInflater = getMenuInflater();
+		menuInflater.inflate(R.menu.menu_main, menu);
 
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		switch ( item.getItemId() ) {
+			case R.id.action_back:
+
+				return true;
+			case R.id.action_dropdown:
+
+				return true;
+			case R.id.action_profile:
+
+				return true;
+			case R.id.action_settings:
+
+				return true;
+			case R.id.action_logout:
+
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
 
 	//==================================================================================================
 	protected void loadMap(GoogleMap googleMap) {
