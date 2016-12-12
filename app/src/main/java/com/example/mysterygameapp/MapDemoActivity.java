@@ -8,34 +8,25 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.android.volley.toolbox.StringRequest;
 import com.example.mysterygameapp.handlers.CameraHandler;
 import com.example.mysterygameapp.handlers.MarkersHandler;
+import com.example.mysterygameapp.singletons.SingletonData;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
@@ -58,8 +49,7 @@ public class MapDemoActivity extends AppCompatActivity implements
 
 	private static LatLng userLocation;
 	private static Marker userMarker;
-
-	private static int markerClickCount = 0;
+	private static SingletonData data;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -92,11 +82,14 @@ public class MapDemoActivity extends AppCompatActivity implements
 			Toast.makeText(this, "GPS location was found!", Toast.LENGTH_SHORT).show();
 			LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 
+			//initialize all data
+			data = new SingletonData();
+
 			userLocation = latLng;
 
 			MarkersHandler markersHandler = new MarkersHandler();
 			userMarker = markersHandler.setUserOnMap(map, userLocation);
-			markersHandler.setMarkersOnMap(map);
+			markersHandler.setMarkersOnMap(map, data);
 
 			new CameraHandler().setCamera(map, userLocation);
 
@@ -115,15 +108,27 @@ public class MapDemoActivity extends AppCompatActivity implements
 
 		MarkersHandler markersHandler = new MarkersHandler();
 
-		//the marker clicked is the user's new position
-		userLocation = new LatLng(clickedMarker.getPosition().latitude, clickedMarker.getPosition().longitude);
-		userMarker.remove();
-		markersHandler.setOpacity(clickedMarker);
+		LatLng clickedMarkerCoordinates = new LatLng(clickedMarker.getPosition().latitude, clickedMarker.getPosition().longitude);
 
+		String name = clickedMarker.getTitle(); //get marker's title
+		int id = data.findEntityID(name); //find entity's id by the title
+		int clickCount = data.getCounter(id); //clickCount == counter
 
+		//marker clicked for the first time
+		if (clickCount == 0) {
+			//the marker clicked is the user's new position
+			userLocation = clickedMarkerCoordinates;
+			userMarker.remove();
+			markersHandler.setOpacity(clickedMarker);
+			userMarker = markersHandler.setUserOnMap(map, userLocation);
 
-		markerClickCount++;
+		} else if (clickCount == 1) {
+			clickedMarker.setSnippet(getString(R.string.welcome_back));
+		} else {
+			data.decrementCounter(id); //display welcome back every time the user clicks on a marker he has already seen
+		}
 
+		data.incrementCounter(id);
 		// Return false to indicate that we have not consumed the event and that we wish for the default behavior to occur
 		return false;
 	}
