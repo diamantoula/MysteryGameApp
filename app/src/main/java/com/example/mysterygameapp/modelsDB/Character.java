@@ -1,14 +1,14 @@
 package com.example.mysterygameapp.modelsDB;
 
-public class CharacterOptions {
+public class Character {
 
-    int char_id;
-    String char_name;
-    String char_lastname;
-    String profession;
-    int age;
+    private int char_id;
+    private String char_name;
+    private String char_lastname;
+    private String profession;
+    private int age;
 
-    public CharacterOptions(){
+    public Character(){
         char_id = -1;
         char_name = "";
         char_lastname = "";
@@ -16,7 +16,7 @@ public class CharacterOptions {
         age = -1;
     }
 
-    public CharacterOptions(int id1, String name1, String lastname1, String profession1, int age1){
+    public Character(int id1, String name1, String lastname1, String profession1, int age1){
         char_id = id1;
         char_name = name1;
         char_lastname = lastname1;

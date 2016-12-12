@@ -57,7 +57,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
                     boolean success = jsonResponse.getBoolean("success");
 
                     if (success) {
-                        startActivity(new Intent(Register.this, CharacterOptions.class));
+                        startActivity(new Intent(Register.this, Character.class));
 
                     } else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(Register.this);

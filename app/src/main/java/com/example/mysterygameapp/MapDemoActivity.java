@@ -172,7 +172,7 @@ public class MapDemoActivity extends AppCompatActivity implements
 
 				return true;
 			case R.id.action_profile:
-
+				startActivity(new Intent(MapDemoActivity.this, UserProfile.class));
 				return true;
 			case R.id.action_settings:
 
