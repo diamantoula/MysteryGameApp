@@ -4,23 +4,30 @@
     <string name="app_name">Mystery Game App</string>
     <string name="menu_settings">Settings</string>
 
-    <string name="defaultClue">Default...</string>
+    <string name="defaultClue">No clue found...</string>
 
-    <string name="clue0">0...</string>
-    <string name="clue1">1...</string>
+    <string-array name="objects_clues">
 
-    <string name="clue2">2...</string>
-    <string name="clue3">3...</string>
+        <item>object clue0...</item>
+        <item>object clue1...</item>
+        <item>object clue2...</item>
+        <item>object clue3...</item>
+        <item>object clue4...</item>
 
-    <string name="clue4">4...</string>
-    <string name="clue5">5...</string>
+    </string-array>
 
-    <string name="clue6">6...</string>
-    <string name="clue7">7...</string>
+    <string-array name="npcs_clues">
 
-    <string name="clue8">8...</string>
-    <string name="clue9">9...</string>
+        <item>npc clue0...</item>
+        <item>npc clue1...</item>
+        <item>npc clue2...</item>
+        <item>npc clue3...</item>
+        <item>npc clue4...</item>
 
+    </string-array>
+
+
+    <string name="hello">Hello Detective...</string>
     <string name="welcome_back">Welcome back Detective...</string>
 
 </resources>

@@ -21,6 +21,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.mysterygameapp.handlers.CameraHandler;
 import com.example.mysterygameapp.handlers.MarkersHandler;
 import com.example.mysterygameapp.singletons.SingletonData;
+import com.example.mysterygameapp.staticData.CountersData;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -99,7 +100,7 @@ public class MapDemoActivity extends AppCompatActivity implements
 
 			MarkersHandler markersHandler = new MarkersHandler();
 			userMarker = markersHandler.setUserOnMap(map, userLocation);
-			markersHandler.setMarkersOnMap(map, data);
+			markersHandler.setMarkersOnMap(map);
 
 			new CameraHandler().setCamera(map, userLocation);
 
@@ -118,27 +119,34 @@ public class MapDemoActivity extends AppCompatActivity implements
 
 		MarkersHandler markersHandler = new MarkersHandler();
 
-		LatLng clickedMarkerCoordinates = new LatLng(clickedMarker.getPosition().latitude, clickedMarker.getPosition().longitude);
+		LatLng clickedMarkerCoordinates = new LatLng(
+				clickedMarker.getPosition().latitude,
+				clickedMarker.getPosition().longitude);
 
-		String name = clickedMarker.getTitle(); //get marker's title
-		int id = data.findEntityID(name); //find entity's id by the title
-		int clickCount = data.getCounter(id); //clickCount == counter
+		String title = clickedMarker.getTitle(); //get marker's title
+		String type = SingletonData.findEntityType(title);
+		int id = data.findEntityID(title); //find entity's id by the title
 
-		//marker clicked for the first time
-		if (clickCount == 0) {
+		if ( CountersData.getCounter(type, id) == 0 ) {   //marker clicked for the first time
 			//the marker clicked is the user's new position
 			userLocation = clickedMarkerCoordinates;
 			userMarker.remove();
-			markersHandler.setOpacity(clickedMarker);
 			userMarker = markersHandler.setUserOnMap(map, userLocation);
+			markersHandler.setInvisible(userMarker);
 
-		} else if (clickCount == 1) {
-			clickedMarker.setSnippet(getString(R.string.welcome_back));
+			markersHandler.setOpacity(clickedMarker);
+			clickedMarker.setSnippet(getString(R.string.hello));
+
+			CountersData.incrementCounter(type, id);
+
+		} else if ( CountersData.getCounter(type, id) == 1 ) {
+			String mes = markersHandler.getSnippetMessage(clickedMarker, getResources());
+			clickedMarker.setSnippet(mes);
+
 		} else {
-			data.decrementCounter(id); //display welcome back every time the user clicks on a marker he has already seen
+			markersHandler.setVisible(userMarker);
 		}
 
-		data.incrementCounter(id);
 		// Return false to indicate that we have not consumed the event and that we wish for the default behavior to occur
 		return false;
 	}
@@ -167,6 +175,9 @@ public class MapDemoActivity extends AppCompatActivity implements
 
 				return true;
 			case R.id.action_settings:
+
+				return true;
+			case R.id.action_save:
 
 				return true;
 			case R.id.action_logout:
