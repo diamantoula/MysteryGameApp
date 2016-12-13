@@ -6,62 +6,104 @@ public class CountersData {
 
     private static ArrayList<Integer> objCounters = new ArrayList<>();
     private static ArrayList<Integer> npcCounters = new ArrayList<>();
+    private static ArrayList<Integer> bonusCounters = new ArrayList<>();
 
     public static void setCounters () {
-        for (int i=0; i<10; i++) { objCounters.add(0); }
-        for (int i=0; i<10; i++) { npcCounters.add(0); }
+        for (int i = 0; i < 5; i++) { objCounters.add(0); }
+        for (int i = 0; i < 5; i++) { npcCounters.add(0); }
+        for (int i = 0; i < 5; i++) { bonusCounters.add(0); }
     }
 
     public static ArrayList<Integer> getCounters (String type) {
 
-        if (type.equals("object")) {
-            return objCounters;
-        } else {
-            return npcCounters;
+        switch (type) {
+            case "object":
+                return objCounters;
+            case "npc":
+                return npcCounters;
+            case "bonus":
+                return bonusCounters;
+            default:
+                return null;
         }
     }
 
     public static void setCounter (String type, int pos, int value) {
 
-        if (type.equals("object")) {
-            objCounters.set(pos, value);
-        } else {
-            npcCounters.set(pos, value);
+        switch (type) {
+            case "object":
+                objCounters.set(pos, value);
+                break;
+            case "npc":
+                npcCounters.set(pos, value);
+                break;
+            case "bonus":
+                bonusCounters.set(pos, value);
+                break;
+            default:
+                break;
         }
     }
 
     public static int getCounter (String type, int pos) {
 
-        if (type.equals("object")) {
-            return objCounters.get(pos);
-        } else {
-            return npcCounters.get(pos);
+        switch (type) {
+            case "object":
+                return objCounters.get(pos);
+            case "npc":
+                return npcCounters.get(pos);
+            case "bonus":
+                return bonusCounters.get(pos);
+            default:
+                return -1;
         }
     }
 
     public static void incrementCounter (String type, int pos) {
+        int count;
 
-        if (type.equals("object")) {
-            int count = getCounter(type, pos);
-            count++;
-            objCounters.set(pos, count);
-        } else {
-            int count = getCounter(type, pos);
-            count++;
-            npcCounters.set(pos, count);
+        switch (type) {
+            case "object":
+                count = getCounter(type, pos);
+                count++;
+                objCounters.set(pos, count);
+                break;
+            case "npc":
+                count = getCounter(type, pos);
+                count++;
+                npcCounters.set(pos, count);
+                break;
+            case "bonus":
+                count = getCounter(type, pos);
+                count++;
+                bonusCounters.set(pos, count);
+                break;
+            default:
+                break;
         }
     }
 
     public static void decrementObjCounter (String type, int pos) {
+        int count;
 
-        if (type.equals("object")) {
-            int count = getCounter(type, pos);
-            count--;
-            objCounters.set(pos, count);
-        } else {
-            int count = getCounter(type, pos);
-            count--;
-            npcCounters.set(pos, count);
+        switch (type) {
+            case "object":
+                count = getCounter(type, pos);
+                count--;
+                objCounters.set(pos, count);
+                break;
+            case "npc":
+                count = getCounter(type, pos);
+                count--;
+                npcCounters.set(pos, count);
+                break;
+            case "bonus":
+                count = getCounter(type, pos);
+                count--;
+                bonusCounters.set(pos, count);
+                break;
+            default:
+                break;
         }
     }
 

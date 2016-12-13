@@ -4,9 +4,11 @@ import android.content.res.Resources;
 
 import com.example.mysterygameapp.MapDemoActivity;
 import com.example.mysterygameapp.R;
+import com.example.mysterygameapp.modelsDB.Bonus;
 import com.example.mysterygameapp.modelsDB.NPC;
 import com.example.mysterygameapp.modelsDB.Object;
 import com.example.mysterygameapp.singletons.SingletonData;
+import com.example.mysterygameapp.staticData.BonusData;
 import com.example.mysterygameapp.staticData.MarkersData;
 import com.example.mysterygameapp.staticData.NPCsData;
 import com.example.mysterygameapp.staticData.ObjectsData;
@@ -35,6 +37,7 @@ public class MarkersHandler extends MapDemoActivity {
 
         ArrayList<Object> objs = ObjectsData.getObjects();
         ArrayList<NPC> npcs = NPCsData.getNPCs();
+        ArrayList<Bonus> bonus = BonusData.getBonuses();
         Marker marker;
         LatLng latLng;
 
@@ -65,6 +68,20 @@ public class MarkersHandler extends MapDemoActivity {
             marker.setTag(0);
             MarkersData.setNpcMarker(marker);
         }
+
+        //bonus
+        for (int i=0; i<5; i++) {
+            latLng = new LatLng(bonus.get(i).getLat(), bonus.get(i).getLng());
+            marker = map.addMarker(new MarkerOptions()
+                    .position(latLng)
+                    .title(bonus.get(i).getName())
+                    .snippet("You found a Bonus!")
+                    .visible(true)
+                    .alpha(1.0f)
+            );
+            marker.setTag(0);
+            MarkersData.setBonusMarker(marker);
+        }
     }
 
     public void setOpacity(Marker marker){ marker.setAlpha(0.4f); }
@@ -83,55 +100,97 @@ public class MarkersHandler extends MapDemoActivity {
 
 //============================================================================//
 
-    //GET THE APPROPRIATE CLUE
-    public String getSnippetMessage(Marker marker, Resources res) {
-        String clue;
+    public String getSnippetMessage (Marker marker, Resources res, String messageType) {
+        String message;
 
         String title = marker.getTitle();
-        String entityType = getEntityType( title );
+        String type = SingletonData.findEntityType(title);
 
-        if (entityType.equals("object")) {
-            clue = getObjClue(title, res);
-
-        } else if (entityType.equals("npc")) {
-            clue = getNpcClue(title, res);
-
-        } else {
-            clue = res.getString(R.string.defaultClue);
+        switch (type) {
+            case "object":
+                message = getObjMessage(title, res, messageType);
+                break;
+            case "npc":
+                message = getNpcMessage(title, res, messageType);
+                break;
+            case "bonus":
+                message = getBonusMessage(title, res, messageType);
+                break;
+            default:
+                message = "";
+                break;
         }
 
-        return clue;
+        return message;
     }
 
-    //BASED ON THE MARKER'S TITLE, FIND WHAT TYPE OF ENTITY IT IS
-    public String getEntityType (String title) {
+    //RETRIEVE OBJECT MESSAGE FROM XML
+    public String getObjMessage (String title, Resources res, String messageType) {
+        String message;
 
-        if ( SingletonData.findEntityType(title).equals("object") ) {
-            return "object";
-        } else if ( SingletonData.findEntityType(title).equals("npc") ) {
-            return "npc";
-        } else {
-            //default = null
-            return null;
+        switch (messageType) {
+            case "greeting":
+                message = res.getString(R.string.objectGreeting);
+                break;
+            case "main":
+                String[] clueArray = res.getStringArray(R.array.objects_clues);
+                int id = SingletonData.findEntityID(title);
+                message = clueArray[id];
+                break;
+            case "back":
+                message = res.getString(R.string.objectBack);
+                break;
+            default:
+                message = "";
+                break;
         }
+
+        return message;
     }
 
-    //RETRIEVE OBJECT CLUE FROM XML
-    public String getObjClue (String title, Resources res) {
-        String[] clueArray = res.getStringArray(R.array.objects_clues);
+    //RETRIEVE NPC MESSAGE FROM XML
+    public String getNpcMessage (String title, Resources res, String messageType) {
+        String message;
 
-        int id = SingletonData.findEntityID(title);
+        switch (messageType) {
+            case "greeting":
+                message = res.getString(R.string.npcGreeting);
+                break;
+            case "main":
+                String[] clueArray = res.getStringArray(R.array.npcs_clues);
+                int id = SingletonData.findEntityID(title);
+                message = clueArray[id];
+                break;
+            case "back":
+                message = res.getString(R.string.npcBack);
+                break;
+            default:
+                message = "";
+                break;
+        }
 
-        return clueArray[id];
+        return message;
     }
 
-    //RETRIEVE NPC CLUE FROM XML
-    public String getNpcClue (String title, Resources res) {
-        String[] clueArray = res.getStringArray(R.array.npcs_clues);
+    //RETRIEVE BONUS MESSAGE FROM XML
+    public String getBonusMessage (String title, Resources res, String messageType) {
+        String message;
 
-        int id = SingletonData.findEntityID(title);
+        switch (messageType) {
+            case "greeting":
+                message = res.getString(R.string.bonusGreeting);
+                break;
+            case "main":
+                message = res.getString(R.string.bonusTaken);
+                break;
+            case "back":
+                message = res.getString(R.string.bonusBack);
+                break;
+            default:
+                message = "";
+                break;
+        }
 
-        return clueArray[id];
+        return message;
     }
-
 }

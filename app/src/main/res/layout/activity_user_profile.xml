@@ -44,7 +44,8 @@
                 android:padding="5dp"
                 android:layout_width="0dp"
                 android:layout_weight="0.6"
-                android:textAlignment="gravity"/>
+                android:textAlignment="gravity"
+                android:inputType="textPassword"/>
 
         </TableRow>
 

@@ -9,6 +9,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.example.mysterygameapp.modelsDB.Character;
+import com.example.mysterygameapp.staticData.CharactersData;
+import com.example.mysterygameapp.staticData.UserData;
+
 public class UserProfile extends AppCompatActivity {
 
     TextView tvUsername;
@@ -31,10 +35,17 @@ public class UserProfile extends AppCompatActivity {
         tvEmail = (TextView) findViewById(R.id.profileEmail);
         tvCharacter = (TextView) findViewById(R.id.profileCharacter);
 
-        tvUsername.setText("kaori");
-        tvPassword.setText("kaori");
-        tvEmail.setText("kaori");
-        tvCharacter.setText("kaori");
+        tvUsername.setText(UserData.getUsername());
+        tvPassword.setText(UserData.getPassword());
+        tvEmail.setText(UserData.getMail());
+            String charName = getCharacterName(UserData.getCharId());
+        tvCharacter.setText(charName);
+    }
+
+    public String getCharacterName (int id) {
+        String wholeName = CharactersData.getCharacter(id).getCharName() +
+                        " " + CharactersData.getCharacter(id).getCharLastname();
+        return wholeName;
     }
 
     @Override

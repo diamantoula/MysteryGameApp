@@ -17,6 +17,7 @@ import com.example.mysterygameapp.MainActivity;
 import com.example.mysterygameapp.R;
 import com.example.mysterygameapp.StartOptions;
 import com.example.mysterygameapp.modelsDB.User;
+import com.example.mysterygameapp.singletons.SingletonData;
 import com.example.mysterygameapp.singletons.SingletonUser;
 import com.example.mysterygameapp.staticData.UserData;
 
@@ -56,13 +57,18 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         username = etUsername.getText().toString();
         password = etPassword.getText().toString();
 
-        if ( username.equals(user.getUsername()) && password.equals(user.getPassword()) ) {
+        /*if ( username.equals(user.getUsername()) && password.equals(user.getPassword()) ) {
+            //initialize all data
+            SingletonData data = new SingletonData();
             startActivity(new Intent(Login.this, StartOptions.class));
         } else {
             Toast.makeText(this, "Incorrect Username or Password.\nTry again", Toast.LENGTH_SHORT).show();
             etUsername.setText("");
             etPassword.setText("");
-        }
+        }*/
+
+        SingletonData data = new SingletonData();
+        startActivity(new Intent(Login.this, StartOptions.class));
 
         /*Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override

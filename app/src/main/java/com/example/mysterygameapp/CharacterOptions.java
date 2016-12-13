@@ -16,7 +16,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.mysterygameapp.loginregister.Login;
 import com.example.mysterygameapp.loginregister.LoginRequest;
+import com.example.mysterygameapp.modelsDB.Character;
 import com.example.mysterygameapp.singletons.SingletonUser;
+import com.example.mysterygameapp.staticData.CharactersData;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,11 +36,6 @@ public class CharacterOptions extends AppCompatActivity implements View.OnClickL
     TextView tvChar2;
     TextView tvChar3;
     TextView tvChar4;
-
-    String char1 = setCharacterProperties("Tony Mckenzie", "Private Investigator", 39, "");
-    String char2 = setCharacterProperties("Bruce Wallace", "Police Detective", 42, "");
-    String char3 = setCharacterProperties("Theresa Jones", "Reporter", 33, "");
-    String char4 = setCharacterProperties("...", "...", 37, "");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +59,11 @@ public class CharacterOptions extends AppCompatActivity implements View.OnClickL
         tvChar2 = (TextView) findViewById(R.id.tvChar2);
         tvChar3 = (TextView) findViewById(R.id.tvChar3);
         tvChar4 = (TextView) findViewById(R.id.tvChar4);
+
+        String char1 = setCharacterString(CharactersData.getCharacter(0));
+        String char2 = setCharacterString(CharactersData.getCharacter(1));
+        String char3 = setCharacterString(CharactersData.getCharacter(2));
+        String char4 = setCharacterString(CharactersData.getCharacter(3));
 
         tvChar1.setText(char1);
         tvChar2.setText(char2);
@@ -113,10 +115,10 @@ public class CharacterOptions extends AppCompatActivity implements View.OnClickL
 
     }
 
-    public String setCharacterProperties(String name, String profession, int age, String info){
-        String completeStr = "Name: " + name + "\n"
-                + "Profession: " + profession + "\n"
-                + "Age: " + age ;
+    public String setCharacterString(Character character){
+        String completeStr = "Name: " + character.getCharName() + " " + character.getCharLastname() + "\n"
+                + "Profession: " + character.getProfession() + "\n"
+                + "Age: " + character.getAge() ;
 
         return completeStr;
     }

@@ -93,9 +93,6 @@ public class MapDemoActivity extends AppCompatActivity implements
 			Toast.makeText(this, "GPS location was found!", Toast.LENGTH_SHORT).show();
 			LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 
-			//initialize all data
-			data = new SingletonData();
-
 			userLocation = latLng;
 
 			MarkersHandler markersHandler = new MarkersHandler();
@@ -125,7 +122,7 @@ public class MapDemoActivity extends AppCompatActivity implements
 
 		String title = clickedMarker.getTitle(); //get marker's title
 		String type = SingletonData.findEntityType(title);
-		int id = data.findEntityID(title); //find entity's id by the title
+		int id = SingletonData.findEntityID(title); //find entity's id by the title
 
 		if ( CountersData.getCounter(type, id) == 0 ) {   //marker clicked for the first time
 			//the marker clicked is the user's new position
@@ -135,16 +132,22 @@ public class MapDemoActivity extends AppCompatActivity implements
 			markersHandler.setInvisible(userMarker);
 
 			markersHandler.setOpacity(clickedMarker);
-			clickedMarker.setSnippet(getString(R.string.hello));
+
+			String greeting = markersHandler.getSnippetMessage(clickedMarker, getResources(), "greeting");
+			clickedMarker.setSnippet(greeting);
 
 			CountersData.incrementCounter(type, id);
 
 		} else if ( CountersData.getCounter(type, id) == 1 ) {
-			String mes = markersHandler.getSnippetMessage(clickedMarker, getResources());
-			clickedMarker.setSnippet(mes);
+			String mainMessage = markersHandler.getSnippetMessage(clickedMarker, getResources(), "main");
+			clickedMarker.setSnippet(mainMessage);
+
+			CountersData.incrementCounter(type, id);
 
 		} else {
 			markersHandler.setVisible(userMarker);
+			String messageBack = markersHandler.getSnippetMessage(clickedMarker, getResources(), "back");
+			clickedMarker.setSnippet(messageBack);
 		}
 
 		// Return false to indicate that we have not consumed the event and that we wish for the default behavior to occur
@@ -157,7 +160,6 @@ public class MapDemoActivity extends AppCompatActivity implements
 
 		MenuInflater menuInflater = getMenuInflater();
 		menuInflater.inflate(R.menu.menu_main, menu);
-
 		return true;
 	}
 
