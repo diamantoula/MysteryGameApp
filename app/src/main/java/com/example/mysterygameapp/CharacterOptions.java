@@ -17,6 +17,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.mysterygameapp.loginregister.Login;
 import com.example.mysterygameapp.loginregister.LoginRequest;
 import com.example.mysterygameapp.modelsDB.Character;
+import com.example.mysterygameapp.singletons.SingletonData;
 import com.example.mysterygameapp.singletons.SingletonUser;
 import com.example.mysterygameapp.staticData.CharactersData;
 
@@ -60,10 +61,10 @@ public class CharacterOptions extends AppCompatActivity implements View.OnClickL
         tvChar3 = (TextView) findViewById(R.id.tvChar3);
         tvChar4 = (TextView) findViewById(R.id.tvChar4);
 
-        String char1 = setCharacterString(CharactersData.getCharacter(0));
-        String char2 = setCharacterString(CharactersData.getCharacter(1));
-        String char3 = setCharacterString(CharactersData.getCharacter(2));
-        String char4 = setCharacterString(CharactersData.getCharacter(3));
+        String char1 = setCharacterString(SingletonData.getCharacters().get(0));
+        String char2 = setCharacterString(SingletonData.getCharacters().get(1));
+        String char3 = setCharacterString(SingletonData.getCharacters().get(2));
+        String char4 = setCharacterString(SingletonData.getCharacters().get(3));
 
         tvChar1.setText(char1);
         tvChar2.setText(char2);

@@ -64,6 +64,21 @@
                 android:textAlignment="gravity"/>
         </TableRow>
 
+        <TableRow>
+            <TextView
+                android:text="Bonus"
+                android:padding="5dp"
+                android:layout_width="0dp"
+                android:layout_weight="0.4"/>
+            <TextView
+                android:id="@+id/profileBonus"
+                android:gravity="start"
+                android:padding="5dp"
+                android:layout_width="0dp"
+                android:layout_weight="0.6"
+                android:textAlignment="gravity"/>
+        </TableRow>
+
         <TableRow android:weightSum="1">
             <TextView
                 android:text="Character"
@@ -77,6 +92,21 @@
                 android:layout_width="0dp"
                 android:layout_weight="0.6"
                 android:textAlignment="gravity"/>
+        </TableRow>
+
+        <TableRow android:weightSum="1">
+            <TextView
+                android:text=""
+                android:padding="5dp"
+                android:layout_width="0dp"
+                android:layout_weight="0.4"/>
+            <ImageView
+                android:id="@+id/profileCharImage"
+                android:gravity="start"
+                android:padding="5dp"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_weight="0.6"/>
         </TableRow>
 
     </TableLayout>

@@ -15,9 +15,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
-import android.app.ActionBar;
 
-import com.android.volley.toolbox.StringRequest;
 import com.example.mysterygameapp.handlers.CameraHandler;
 import com.example.mysterygameapp.handlers.MarkersHandler;
 import com.example.mysterygameapp.singletons.SingletonData;
@@ -55,7 +53,6 @@ public class MapDemoActivity extends AppCompatActivity implements
 
 	private static LatLng userLocation;
 	private static Marker userMarker;
-	private static SingletonData data;
 
 	Toolbar toolbar;
 
@@ -124,32 +121,29 @@ public class MapDemoActivity extends AppCompatActivity implements
 		String type = SingletonData.findEntityType(title);
 		int id = SingletonData.findEntityID(title); //find entity's id by the title
 
-		if ( CountersData.getCounter(type, id) == 0 ) {   //marker clicked for the first time
+		if (  SingletonData.getCounters(type).get(id) == 0 ) {   //marker clicked for the first time
 			//the marker clicked is the user's new position
 			userLocation = clickedMarkerCoordinates;
 			userMarker.remove();
 			userMarker = markersHandler.setUserOnMap(map, userLocation);
 			markersHandler.setInvisible(userMarker);
 
-			markersHandler.setOpacity(clickedMarker);
+			markersHandler.startInteraction(clickedMarker, id, type);
+			clickedMarker.setSnippet( markersHandler.getSnippetMessage(clickedMarker, getResources(), "greeting") );
 
-			String greeting = markersHandler.getSnippetMessage(clickedMarker, getResources(), "greeting");
-			clickedMarker.setSnippet(greeting);
+		} else if ( SingletonData.getCounters(type).get(id) == 1 ) {
 
-			CountersData.incrementCounter(type, id);
-
-		} else if ( CountersData.getCounter(type, id) == 1 ) {
-			String mainMessage = markersHandler.getSnippetMessage(clickedMarker, getResources(), "main");
-			clickedMarker.setSnippet(mainMessage);
-
-			CountersData.incrementCounter(type, id);
+			markersHandler.interactionMode(clickedMarker, id, type);
+			clickedMarker.setSnippet( markersHandler.getSnippetMessage(clickedMarker, getResources(), "main") );
 
 		} else {
-			markersHandler.setVisible(userMarker);
-			String messageBack = markersHandler.getSnippetMessage(clickedMarker, getResources(), "back");
-			clickedMarker.setSnippet(messageBack);
+			//markersHandler.setVisible(userMarker);
+
+			markersHandler.terminateInteraction(clickedMarker, id, type);
+			clickedMarker.setSnippet( markersHandler.getSnippetMessage(clickedMarker, getResources(), "back") );
 		}
 
+		//CountersData.getCounter(type, id)
 		// Return false to indicate that we have not consumed the event and that we wish for the default behavior to occur
 		return false;
 	}

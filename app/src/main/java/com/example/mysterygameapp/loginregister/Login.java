@@ -1,28 +1,24 @@
 package com.example.mysterygameapp.loginregister;
 
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.toolbox.Volley;
-import com.example.mysterygameapp.CharacterOptions;
-import com.example.mysterygameapp.MainActivity;
 import com.example.mysterygameapp.R;
 import com.example.mysterygameapp.StartOptions;
+import com.example.mysterygameapp.modelsDB.Bonus;
+import com.example.mysterygameapp.modelsDB.Character;
+import com.example.mysterygameapp.modelsDB.NPC;
+import com.example.mysterygameapp.modelsDB.Object;
 import com.example.mysterygameapp.modelsDB.User;
 import com.example.mysterygameapp.singletons.SingletonData;
-import com.example.mysterygameapp.singletons.SingletonUser;
 import com.example.mysterygameapp.staticData.UserData;
+import com.google.android.gms.maps.model.Marker;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.ArrayList;
 
 public class Login extends AppCompatActivity implements View.OnClickListener{
 
@@ -33,7 +29,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
     private String username;
     private String password;
 
-    private static User user;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +53,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         username = etUsername.getText().toString();
         password = etPassword.getText().toString();
 
-        /*if ( username.equals(user.getUsername()) && password.equals(user.getPassword()) ) {
-            //initialize all data
-            SingletonData data = new SingletonData();
+        /*if ( username.equals(staticUser.getUsername()) && password.equals(staticUser.getPassword()) ) {
+            //initialize all staticData
+            SingletonData staticData = new SingletonData();
             startActivity(new Intent(Login.this, StartOptions.class));
         } else {
             Toast.makeText(this, "Incorrect Username or Password.\nTry again", Toast.LENGTH_SHORT).show();
@@ -67,7 +63,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
             etPassword.setText("");
         }*/
 
-        SingletonData data = new SingletonData();
+        new SingletonData();
         startActivity(new Intent(Login.this, StartOptions.class));
 
         /*Response.Listener<String> responseListener = new Response.Listener<String>() {

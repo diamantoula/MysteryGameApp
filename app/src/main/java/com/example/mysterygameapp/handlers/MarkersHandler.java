@@ -1,6 +1,7 @@
 package com.example.mysterygameapp.handlers;
 
 import android.content.res.Resources;
+import android.widget.Toast;
 
 import com.example.mysterygameapp.MapDemoActivity;
 import com.example.mysterygameapp.R;
@@ -9,6 +10,7 @@ import com.example.mysterygameapp.modelsDB.NPC;
 import com.example.mysterygameapp.modelsDB.Object;
 import com.example.mysterygameapp.singletons.SingletonData;
 import com.example.mysterygameapp.staticData.BonusData;
+import com.example.mysterygameapp.staticData.CountersData;
 import com.example.mysterygameapp.staticData.MarkersData;
 import com.example.mysterygameapp.staticData.NPCsData;
 import com.example.mysterygameapp.staticData.ObjectsData;
@@ -33,11 +35,11 @@ public class MarkersHandler extends MapDemoActivity {
         return marker;
     }
 
-    public void setMarkersOnMap(GoogleMap map){
+    public static void setMarkersOnMap(GoogleMap map){
 
-        ArrayList<Object> objs = ObjectsData.getObjects();
-        ArrayList<NPC> npcs = NPCsData.getNPCs();
-        ArrayList<Bonus> bonus = BonusData.getBonuses();
+        ArrayList<Object> objs = SingletonData.getObjects();
+        ArrayList<NPC> npcs = SingletonData.getNPCs();
+        ArrayList<Bonus> bonus = SingletonData.getBonuses();
         Marker marker;
         LatLng latLng;
 
@@ -51,8 +53,7 @@ public class MarkersHandler extends MapDemoActivity {
                     .visible(true)
                     .alpha(1.0f)
             );
-            marker.setTag(0);
-            MarkersData.setObjMarker(marker);
+            MarkersData.setMarker(marker, "object");
         }
 
         //npcs
@@ -65,8 +66,7 @@ public class MarkersHandler extends MapDemoActivity {
                     .visible(true)
                     .alpha(1.0f)
             );
-            marker.setTag(0);
-            MarkersData.setNpcMarker(marker);
+            MarkersData.setMarker(marker, "npc");
         }
 
         //bonus
@@ -77,14 +77,17 @@ public class MarkersHandler extends MapDemoActivity {
                     .title(bonus.get(i).getName())
                     .snippet("You found a Bonus!")
                     .visible(true)
-                    .alpha(1.0f)
+                    .alpha(0.4f)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
             );
-            marker.setTag(0);
-            MarkersData.setBonusMarker(marker);
+            MarkersData.setMarker(marker, "bonus");
         }
-    }
 
-    public void setOpacity(Marker marker){ marker.setAlpha(0.4f); }
+        //initialize markers in SingletonData
+        SingletonData.setMarkers(MarkersData.getMarkers("object"), "object");
+        SingletonData.setMarkers(MarkersData.getMarkers("npc"), "npc");
+        SingletonData.setMarkers(MarkersData.getMarkers("bonus"), "bonus");
+    }
 
     public void removeMarker(Marker marker){
         marker.remove();
@@ -96,6 +99,29 @@ public class MarkersHandler extends MapDemoActivity {
 
     public void setInvisible(Marker marker) {
         marker.setVisible(false);
+    }
+
+//============================================================================//
+    //INTERACTION
+
+    public void startInteraction (Marker marker, int pos, String type) {
+
+        marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+        CountersData.incrementCounter(type, pos);
+    }
+
+    public void interactionMode (Marker marker, int pos, String type) {
+
+        if (type.equals("bonus")) {
+            int bonus = SingletonData.getUser().getBonus() + SingletonData.getBonuses().get(pos).getBonus();
+            SingletonData.getUser().setBonus(bonus);
+        }
+
+        CountersData.incrementCounter(type, pos);
+    }
+
+    public void terminateInteraction(Marker marker, int pos, String type) {
+        marker.setAlpha(0.4f);
     }
 
 //============================================================================//
