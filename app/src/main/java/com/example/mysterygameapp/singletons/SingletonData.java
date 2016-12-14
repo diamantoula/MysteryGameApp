@@ -1,5 +1,9 @@
 package com.example.mysterygameapp.singletons;
 
+import android.content.SharedPreferences;
+import android.support.v7.app.AppCompatActivity;
+
+import com.example.mysterygameapp.SaveLoadHandler;
 import com.example.mysterygameapp.handlers.MarkersHandler;
 import com.example.mysterygameapp.modelsDB.Bonus;
 import com.example.mysterygameapp.modelsDB.Character;
@@ -17,9 +21,10 @@ import com.google.android.gms.maps.model.Marker;
 
 import org.w3c.dom.CharacterData;
 
+import java.net.PortUnreachableException;
 import java.util.ArrayList;
 
-public class SingletonData {
+public class SingletonData extends AppCompatActivity {
 
     private static ArrayList<Object> objects;
     private static ArrayList<NPC> npcs;
@@ -39,6 +44,7 @@ public class SingletonData {
 //================================================================================================//
     //CONSTRUCTOR, SETDATA, GETDATA
 
+    //CALLED IN THE LOGIN. AFTER THE USER LOGIN SUCCESSFULLY
     public SingletonData(){
         setData();
         getData();
@@ -58,21 +64,81 @@ public class SingletonData {
         objects = ObjectsData.getObjects();
         npcs = NPCsData.getNPCs();
         bonuses = BonusData.getBonuses();
-
         objCounters = CountersData.getCounters("object");
         npcCounters = CountersData.getCounters("npc");
         bonusCounters = CountersData.getCounters("bonus");
-
-        //objMarkers;
-        //npcMarkers;
-        //bonusMarkers;
-
         characters = CharactersData.getCharacters();
         user = UserData.getUser();
+        //objMarkers; npcMarkers; bonusMarkers;
     }
 
 //================================================================================================//
-    //MARKERS SET, GET, UPDATE?
+    //COUNTERS GET, INCREMENT, DECREMENT
+
+    public static ArrayList<Integer> getCounters (String type) {
+
+        switch (type) {
+            case "object":
+                return objCounters;
+            case "npc":
+                return npcCounters;
+            case "bonus":
+                return bonusCounters;
+            default:
+                return null;
+        }
+    }
+
+    public static void incrementCounter (String type, int pos) {
+        int count;
+
+        switch (type) {
+            case "object":
+                count = objCounters.get(pos);
+                count++;
+                objCounters.set(pos, count);
+                break;
+            case "npc":
+                count = npcCounters.get(pos);
+                count++;
+                npcCounters.set(pos, count);
+                break;
+            case "bonus":
+                count = bonusCounters.get(pos);
+                count++;
+                bonusCounters.set(pos, count);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public static void decrementObjCounter (String type, int pos) {
+        int count;
+
+        switch (type) {
+            case "object":
+                count = objCounters.get(pos);
+                count--;
+                objCounters.set(pos, count);
+                break;
+            case "npc":
+                count = npcCounters.get(pos);
+                count--;
+                npcCounters.set(pos, count);
+                break;
+            case "bonus":
+                count = bonusCounters.get(pos);
+                count--;
+                bonusCounters.set(pos, count);
+                break;
+            default:
+                break;
+        }
+    }
+
+//================================================================================================//
+    //MARKERS SET, GET
 
     public static void setMarkers (ArrayList<Marker> markers, String type) {
 
@@ -106,72 +172,30 @@ public class SingletonData {
     }
 
 //================================================================================================//
+    //USER GET, SETCOUNT, SETBONUS
+
+    public static User getUser () { return user; }
+
+    public static void setUserCount (int count1) {
+        user.setCount(count1);
+    }
+
+    public static void setUserBonus (int bonus1) {
+        user.setBonus(bonus1);
+    }
+
+    public static void incrementUserCount () {
+        int count = user.getCount();
+        count++;
+        user.setCount(count);
+    }
+
+//================================================================================================//
     //GETTERS
 
     public static ArrayList<Object> getObjects () { return objects; }
     public static ArrayList<NPC> getNPCs () { return npcs; }
     public static ArrayList<Bonus> getBonuses () { return bonuses; }
     public static ArrayList<Character> getCharacters () { return characters; }
-    public static User getUser () { return user; }
-
-    public static ArrayList<Integer> getCounters (String type) {
-
-        switch (type) {
-            case "object":
-                return objCounters;
-            case "npc":
-                return npcCounters;
-            case "bonus":
-                return bonusCounters;
-            default:
-                return null;
-        }
-    }
-
-//================================================================================================//
-    //FIND ENTITY INFO
-
-    public static int findEntityID (String title) {
-        ArrayList<Object> objs = getObjects();
-        ArrayList<NPC> npcs = getNPCs();
-        ArrayList<Bonus> bonus = getBonuses();
-
-        int id = -1;
-
-        for (int i =0; i<5; i++) {
-
-            if ( title.equals(objs.get(i).getObjName()) ) {
-                id = objs.get(i).getObjId();
-            }
-            if ( title.equals(npcs.get(i).getNPCName()) ) {
-                id = npcs.get(i).getNPCId();
-            }
-            if ( title.equals(bonus.get(i).getName() )) {
-                id = bonus.get(i).getId();
-            }
-        }
-
-        return id;
-    }
-
-    public static String findEntityType (String title) {
-        ArrayList<Object> objs = getObjects();
-        ArrayList<NPC> npcs = getNPCs();
-        ArrayList<Bonus> bonus = getBonuses();
-
-        for (int i =0; i<5; i++) {
-
-            if ( title.equals(objs.get(i).getObjName()) ) {
-                return "object";
-            }
-            if ( title.equals(npcs.get(i).getNPCName()) ) {
-                return "npc";
-            }
-            if ( title.equals(bonus.get(i).getName()) ) {
-                return "bonus";
-            }
-        }
-        return null;
-    }
 
 }

@@ -1,7 +1,6 @@
 package com.example.mysterygameapp;
 
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,21 +9,9 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.mysterygameapp.loginregister.Login;
-import com.example.mysterygameapp.loginregister.LoginRequest;
 import com.example.mysterygameapp.modelsDB.Character;
 import com.example.mysterygameapp.singletons.SingletonData;
-import com.example.mysterygameapp.singletons.SingletonUser;
-import com.example.mysterygameapp.staticData.CharactersData;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 public class CharacterOptions extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 

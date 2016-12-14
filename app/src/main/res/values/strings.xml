@@ -6,21 +6,21 @@
 
     <string-array name="objects_clues">
 
-        <item>object clue0...</item>
-        <item>object clue1...</item>
-        <item>object clue2...</item>
-        <item>object clue3...</item>
-        <item>object clue4...</item>
+        <item>.....</item>
+        <item>.....</item>
+        <item>.....</item>
+        <item>.....</item>
+        <item>.....</item>
 
     </string-array>
 
     <string-array name="npcs_clues">
 
-        <item>npc clue0...</item>
-        <item>npc clue1...</item>
-        <item>npc clue2...</item>
-        <item>npc clue3...</item>
-        <item>npc clue4...</item>
+        <item>.....</item>
+        <item>.....</item>
+        <item>.....</item>
+        <item>.....</item>
+        <item>.....</item>
 
     </string-array>
 

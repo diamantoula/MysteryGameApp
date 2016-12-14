@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -34,6 +35,8 @@ import com.google.android.gms.maps.model.Marker;
 
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
+
+import static com.example.mysterygameapp.StartOptions.USER_COUNT;
 
 @RuntimePermissions
 public class MapDemoActivity extends AppCompatActivity implements
@@ -76,6 +79,9 @@ public class MapDemoActivity extends AppCompatActivity implements
 			Toast.makeText(this, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
 		}
 
+		//MarkersHandler markersHandler = new MarkersHandler();
+		//markersHandler.setMarkersOnMap(map);
+
 	}
 
 	//The request to connect the client finishes successfully. Now, you can request the current location or start periodic updates
@@ -95,6 +101,7 @@ public class MapDemoActivity extends AppCompatActivity implements
 			MarkersHandler markersHandler = new MarkersHandler();
 			userMarker = markersHandler.setUserOnMap(map, userLocation);
 			markersHandler.setMarkersOnMap(map);
+			markersHandler.displayNextEntity(SingletonData.getUser().getCount(), userMarker);
 
 			new CameraHandler().setCamera(map, userLocation);
 
@@ -118,8 +125,8 @@ public class MapDemoActivity extends AppCompatActivity implements
 				clickedMarker.getPosition().longitude);
 
 		String title = clickedMarker.getTitle(); //get marker's title
-		String type = SingletonData.findEntityType(title);
-		int id = SingletonData.findEntityID(title); //find entity's id by the title
+		String type = EntityInfo.findEntityType(title);
+		int id = EntityInfo.findEntityID(title); //find entity's id by the title
 
 		if (  SingletonData.getCounters(type).get(id) == 0 ) {   //marker clicked for the first time
 			//the marker clicked is the user's new position
@@ -138,16 +145,20 @@ public class MapDemoActivity extends AppCompatActivity implements
 
 		} else {
 			//markersHandler.setVisible(userMarker);
-
 			markersHandler.terminateInteraction(clickedMarker, id, type);
 			clickedMarker.setSnippet( markersHandler.getSnippetMessage(clickedMarker, getResources(), "back") );
 		}
 
-		//CountersData.getCounter(type, id)
 		// Return false to indicate that we have not consumed the event and that we wish for the default behavior to occur
 		return false;
 	}
 
+	@Override
+	protected void onPause() {
+		super.onPause();
+
+		Toast.makeText(getApplicationContext(), "saved", Toast.LENGTH_SHORT).show();
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -163,28 +174,32 @@ public class MapDemoActivity extends AppCompatActivity implements
 		switch ( item.getItemId() ) {
 			case R.id.action_back:
 
-				return true;
+				break;
 			case R.id.action_dropdown:
 
-				return true;
+				break;
 			case R.id.action_profile:
 				startActivity(new Intent(MapDemoActivity.this, UserProfile.class));
-				return true;
+				break;
+
 			case R.id.action_settings:
 
-				return true;
+				break;
 			case R.id.action_save:
+				break;
 
-				return true;
 			case R.id.action_logout:
 				startActivity(new Intent(MapDemoActivity.this, MainActivity.class));
-				return true;
+				break;
+
 			default:
-				return super.onOptionsItemSelected(item);
+				break;
 		}
+		return super.onOptionsItemSelected(item);
 	}
 
-	//==================================================================================================
+//================================================================================================//
+
 	protected void loadMap(GoogleMap googleMap) {
 		map = googleMap;
 		if (map != null) {

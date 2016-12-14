@@ -47,37 +47,6 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
         password = etPassword.getText().toString();
         mail = etEmail.getText().toString();
 
-        /*Response.Listener<String> responseListener = new Response.Listener<String>() {
-
-            @Override
-            public void onResponse(String response) {
-
-                try {
-                    JSONObject jsonResponse = new JSONObject(response);
-                    boolean success = jsonResponse.getBoolean("success");
-
-                    if (success) {
-                        startActivity(new Intent(Register.this, Character.class));
-
-                    } else {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(Register.this);
-                        builder.setMessage("Register Failed")
-                                .setNegativeButton("Retry", null)
-                                .create()
-                                .show();
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        };
-
-        RegisterRequest registerRequest = new RegisterRequest(username,password,mail, responseListener);
-        RequestQueue queue = Volley.newRequestQueue(Register.this);
-        queue.add(registerRequest);*/
-
         startActivity(new Intent(Register.this, CharacterOptions.class));
 
     }

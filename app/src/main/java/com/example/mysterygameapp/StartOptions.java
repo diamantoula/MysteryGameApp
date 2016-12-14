@@ -1,6 +1,7 @@
 package com.example.mysterygameapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -9,8 +10,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
+import com.example.mysterygameapp.singletons.SingletonData;
 
 public class StartOptions extends AppCompatActivity implements View.OnClickListener{
+
+    public static final String FILENAME = "SavedGameFile";
+    public static final String USER_COUNT = "userCount";
+    public static final String USER_BONUS = "userBonus";
 
     Toolbar toolbar;
 
@@ -59,24 +67,26 @@ public class StartOptions extends AppCompatActivity implements View.OnClickListe
         switch ( item.getItemId() ) {
             case R.id.action_back:
 
-                return true;
+                break;
             case R.id.action_dropdown:
 
-                return true;
+                break;
             case R.id.action_profile:
                 startActivity(new Intent(StartOptions.this, UserProfile.class));
-                return true;
+                break;
             case R.id.action_settings:
 
-                return true;
+                break;
             case R.id.action_save:
+                break;
 
-                return true;
             case R.id.action_logout:
                 startActivity(new Intent(StartOptions.this, MainActivity.class));
-                return true;
+                break;
+
             default:
-                return super.onOptionsItemSelected(item);
+                break;
         }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -66,47 +66,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         new SingletonData();
         startActivity(new Intent(Login.this, StartOptions.class));
 
-        /*Response.Listener<String> responseListener = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                JSONObject jsonResponse = null;
-
-                try {
-                    jsonResponse = new JSONObject(response);
-                    boolean success = jsonResponse.getBoolean("success");
-
-                    if(success)
-                    {
-                        String mail = jsonResponse.getString("mail");
-
-                        SingletonUser singletonUser = new SingletonUser(
-                                jsonResponse.getString("username"),
-                                jsonResponse.getString("password"),
-                                jsonResponse.getInt("count"),
-                                jsonResponse.getInt("char_id") );
-
-                        startActivity(new Intent(Login.this, StartOptions.class));
-
-                    }else{
-                        AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
-                        builder.setMessage("Login Failed")
-                                .setNegativeButton("Retry", null)
-                                .create()
-                                .show();
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        };
-
-        LoginRequest loginRequest = new LoginRequest(username, password, responseListener);
-        RequestQueue queue = Volley.newRequestQueue(Login.this);
-        queue.add(loginRequest); */
-
     }
 
 }
