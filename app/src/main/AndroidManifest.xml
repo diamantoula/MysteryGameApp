@@ -59,8 +59,6 @@
         </activity>
         <activity android:name=".loginregister.Login">
         </activity>
-        <activity android:name=".loginregister.Register">
-        </activity>
         <activity android:name=".MapDemoActivity">
         </activity>
         <activity android:name=".StartOptions">
@@ -72,6 +70,8 @@
         <activity android:name=".test.Test">
         </activity>
         <activity android:name=".UserProfile">
+        </activity>
+        <activity android:name=".loginregister.Register">
         </activity>
     </application>
 

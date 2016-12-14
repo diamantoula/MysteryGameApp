@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import com.example.mysterygameapp.loginregister.Login;
 import com.example.mysterygameapp.loginregister.Register;
+import com.example.mysterygameapp.singletons.SingletonData;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -35,5 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(MainActivity.this, Register.class));
                 break;
         }
+
+        new SingletonData();
     }
 }

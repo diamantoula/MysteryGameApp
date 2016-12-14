@@ -44,7 +44,7 @@ public class SingletonData extends AppCompatActivity {
 //================================================================================================//
     //CONSTRUCTOR, SETDATA, GETDATA
 
-    //CALLED IN THE LOGIN. AFTER THE USER LOGIN SUCCESSFULLY
+    //CALLED IN THE MAIN ACTIVITY BEFORE THE USER LOGS IN OR REGISTERS
     public SingletonData(){
         setData();
         getData();

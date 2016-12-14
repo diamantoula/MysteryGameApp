@@ -104,7 +104,7 @@ public class MapDemoActivity extends AppCompatActivity implements
 			Toast.makeText(this, "Current location was null, enable GPS on emulator!", Toast.LENGTH_SHORT).show();
 		}
 
-		startLocationUpdates();
+		//startLocationUpdates();
 
 	}
 

@@ -63,7 +63,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
             etPassword.setText("");
         }*/
 
-        new SingletonData();
         startActivity(new Intent(Login.this, StartOptions.class));
 
     }
