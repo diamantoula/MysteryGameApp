@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mysterygameapp.handlers.CameraHandler;
+import com.example.mysterygameapp.handlers.MarkersHandler;
 import com.example.mysterygameapp.modelsDB.Character;
 import com.example.mysterygameapp.modelsDB.User;
 import com.example.mysterygameapp.singletons.SingletonData;
@@ -96,20 +98,9 @@ public class UserProfile extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch ( item.getItemId() ) {
-            case R.id.action_back:
 
-                break;
-            case R.id.action_dropdown:
-
-                break;
             case R.id.action_profile:
                 startActivity(new Intent(UserProfile.this, UserProfile.class));
-                break;
-
-            case R.id.action_settings:
-
-                break;
-            case R.id.action_save:
                 break;
 
             case R.id.action_logout:

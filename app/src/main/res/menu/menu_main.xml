@@ -6,13 +6,25 @@
         android:id="@+id/action_back"
         android:title="Go Back..."
         android:icon="@drawable/ic_action_left_arrow"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/action_zoom_in"
+        android:title="Zoom In"
+        android:icon="@drawable/ic_action_zoom_in"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/action_zoom_out"
+        android:title="Zoom Out"
+        android:icon="@drawable/ic_action_zoom_out"
+        app:showAsAction="always"/>
 
     <item
         android:id="@+id/action_dropdown"
         android:title="Options"
         android:icon="@drawable/ic_action_dropdown"
-        app:showAsAction="never">
+        app:showAsAction="always">
 
         <item
             android:id="@+id/action_profile"

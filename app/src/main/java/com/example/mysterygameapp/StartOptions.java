@@ -65,19 +65,9 @@ public class StartOptions extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch ( item.getItemId() ) {
-            case R.id.action_back:
 
-                break;
-            case R.id.action_dropdown:
-
-                break;
             case R.id.action_profile:
                 startActivity(new Intent(StartOptions.this, UserProfile.class));
-                break;
-            case R.id.action_settings:
-
-                break;
-            case R.id.action_save:
                 break;
 
             case R.id.action_logout:

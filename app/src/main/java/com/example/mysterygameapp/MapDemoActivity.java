@@ -175,12 +175,7 @@ public class MapDemoActivity extends AppCompatActivity implements
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		switch ( item.getItemId() ) {
-			case R.id.action_back:
 
-				break;
-			case R.id.action_dropdown:
-
-				break;
 			case R.id.action_profile:
 				startActivity(new Intent(MapDemoActivity.this, UserProfile.class));
 				break;
@@ -189,15 +184,20 @@ public class MapDemoActivity extends AppCompatActivity implements
 				MarkersHandler  markersShow = new MarkersHandler();
 				markersShow.showAllMarkers();
 				break;
+
 			case R.id.action_hide_markers:
 				MarkersHandler  markersHide = new MarkersHandler();
 				markersHide.hideMarkers(SingletonData.getUser().getCount(), currentVisitedMarker, userMarker);
 				break;
 
-			case R.id.action_settings:
-
+			case R.id.action_zoom_in:
+				CameraHandler zoomIn = new CameraHandler();
+				zoomIn.cameraZoomIn(map, userMarker.getPosition());
 				break;
-			case R.id.action_save:
+
+			case R.id.action_zoom_out:
+				CameraHandler zoomOut = new CameraHandler();
+				zoomOut.cameraZoomOut(map, userMarker.getPosition());
 				break;
 
 			case R.id.action_logout:
