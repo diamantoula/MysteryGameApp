@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.IntentSender;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -20,7 +19,6 @@ import android.widget.Toast;
 import com.example.mysterygameapp.handlers.CameraHandler;
 import com.example.mysterygameapp.handlers.MarkersHandler;
 import com.example.mysterygameapp.singletons.SingletonData;
-import com.example.mysterygameapp.staticData.CountersData;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -35,8 +33,6 @@ import com.google.android.gms.maps.model.Marker;
 
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
-
-import static com.example.mysterygameapp.StartOptions.USER_COUNT;
 
 @RuntimePermissions
 public class MapDemoActivity extends AppCompatActivity implements
@@ -56,6 +52,7 @@ public class MapDemoActivity extends AppCompatActivity implements
 
 	private static LatLng userLocation;
 	private static Marker userMarker;
+	private static Marker currentVisitedMarker;
 
 	Toolbar toolbar;
 
@@ -78,10 +75,6 @@ public class MapDemoActivity extends AppCompatActivity implements
 		} else {
 			Toast.makeText(this, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
 		}
-
-		//MarkersHandler markersHandler = new MarkersHandler();
-		//markersHandler.setMarkersOnMap(map);
-
 	}
 
 	//The request to connect the client finishes successfully. Now, you can request the current location or start periodic updates
@@ -101,7 +94,7 @@ public class MapDemoActivity extends AppCompatActivity implements
 			MarkersHandler markersHandler = new MarkersHandler();
 			userMarker = markersHandler.setUserOnMap(map, userLocation);
 			markersHandler.setMarkersOnMap(map);
-			markersHandler.displayNextEntity(SingletonData.getUser().getCount(), userMarker);
+			markersHandler.displayNextEntity(SingletonData.getUser().getCount(), userMarker, userMarker);
 
 			new CameraHandler().setCamera(map, userLocation);
 
@@ -118,6 +111,8 @@ public class MapDemoActivity extends AppCompatActivity implements
 	@Override
 	public boolean onMarkerClick(Marker clickedMarker) {
 
+		currentVisitedMarker = clickedMarker;
+
 		MarkersHandler markersHandler = new MarkersHandler();
 
 		LatLng clickedMarkerCoordinates = new LatLng(
@@ -125,28 +120,36 @@ public class MapDemoActivity extends AppCompatActivity implements
 				clickedMarker.getPosition().longitude);
 
 		String title = clickedMarker.getTitle(); //get marker's title
-		String type = EntityInfo.findEntityType(title);
-		int id = EntityInfo.findEntityID(title); //find entity's id by the title
 
-		if (  SingletonData.getCounters(type).get(id) == 0 ) {   //marker clicked for the first time
-			//the marker clicked is the user's new position
-			userLocation = clickedMarkerCoordinates;
-			userMarker.remove();
-			userMarker = markersHandler.setUserOnMap(map, userLocation);
-			markersHandler.setInvisible(userMarker);
+		//if the user is not clicking on the userMarker...
+		if (!title.equals("user")){
 
-			markersHandler.startInteraction(clickedMarker, id, type);
-			clickedMarker.setSnippet( markersHandler.getSnippetMessage(clickedMarker, getResources(), "greeting") );
+			String type = EntityInfo.findEntityType(title);
+			int id = EntityInfo.findEntityID(title); //find entity's id by the title
 
-		} else if ( SingletonData.getCounters(type).get(id) == 1 ) {
+			if (  SingletonData.getCounters(type).get(id) == 0 ) {   //marker clicked for the first time
 
-			markersHandler.interactionMode(clickedMarker, id, type);
-			clickedMarker.setSnippet( markersHandler.getSnippetMessage(clickedMarker, getResources(), "main") );
+				markersHandler.startInteraction(clickedMarker, id, type);
+				clickedMarker.setSnippet( markersHandler.getSnippetMessage(clickedMarker, getResources(), "greeting") );
 
-		} else {
-			//markersHandler.setVisible(userMarker);
-			markersHandler.terminateInteraction(clickedMarker, id, type);
-			clickedMarker.setSnippet( markersHandler.getSnippetMessage(clickedMarker, getResources(), "back") );
+			} else if ( SingletonData.getCounters(type).get(id) == 1 ) {
+
+				//the marker double clicked will be the user's new position
+				userLocation = clickedMarkerCoordinates;
+				//update userMarker -> set on map and hide until interaction is terminated
+				userMarker = markersHandler.updateUserMarker(map, userMarker, userLocation);
+
+				markersHandler.interactionMode(clickedMarker, id, type);
+				clickedMarker.setSnippet( markersHandler.getSnippetMessage(clickedMarker, getResources(), "main") );
+
+			} else {
+
+				markersHandler.terminateInteraction(clickedMarker, userMarker, id, type);
+				clickedMarker.setSnippet( markersHandler.getSnippetMessage(clickedMarker, getResources(), "back") );
+				markersHandler.setVisible(userMarker);
+
+			}
+
 		}
 
 		// Return false to indicate that we have not consumed the event and that we wish for the default behavior to occur
@@ -180,6 +183,15 @@ public class MapDemoActivity extends AppCompatActivity implements
 				break;
 			case R.id.action_profile:
 				startActivity(new Intent(MapDemoActivity.this, UserProfile.class));
+				break;
+
+			case R.id.action_show_markers:
+				MarkersHandler  markersShow = new MarkersHandler();
+				markersShow.showAllMarkers();
+				break;
+			case R.id.action_hide_markers:
+				MarkersHandler  markersHide = new MarkersHandler();
+				markersHide.hideMarkers(SingletonData.getUser().getCount(), currentVisitedMarker, userMarker);
 				break;
 
 			case R.id.action_settings:

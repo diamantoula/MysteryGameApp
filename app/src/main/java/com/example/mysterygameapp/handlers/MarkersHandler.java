@@ -22,20 +22,37 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class MarkersHandler extends MapDemoActivity {
 
+//============================================================================//
+    //DISPLAYING MARKERS
+
+    //CALLED ONCONNECTED
     public Marker setUserOnMap(GoogleMap map, LatLng location){
 
         Marker marker = map.addMarker(new MarkerOptions()
                 .position(location)
                 .title("user")
+                .snippet("This is Me...")
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
         );
+        marker.showInfoWindow();
 
         return marker;
     }
 
+    //CALLED ONMARKERCLICK (first time click)
+    public Marker updateUserMarker(GoogleMap map, Marker user, LatLng newLocation){
+        user.remove();
+        user = setUserOnMap(map, newLocation);
+        setInvisible(user);
+
+        return user;
+    }
+
+    //CALLED ONCONNECTED
     public void setMarkersOnMap(GoogleMap map){
 
         ArrayList<Object> objs = SingletonData.getObjects();
@@ -90,6 +107,124 @@ public class MarkersHandler extends MapDemoActivity {
         SingletonData.setMarkers(MarkersData.getMarkers("bonus"), "bonus");
     }
 
+    public void showAllMarkers () {
+        ArrayList<Marker> objMarkers = SingletonData.getMarkers("object");
+        ArrayList<Marker> npcMarkers = SingletonData.getMarkers("npc");
+        Marker marker;
+
+        for (int i=0; i<5; i++) {
+            marker = objMarkers.get(i);
+            setVisible(marker);
+            marker = npcMarkers.get(i);
+            setVisible(marker);
+        }
+    }
+
+    public void hideMarkers (int userCount, Marker currentMarker, Marker user) {
+        ArrayList<Marker> objMarkers = SingletonData.getMarkers("object");
+        ArrayList<Marker> npcMarkers = SingletonData.getMarkers("npc");
+        Marker marker;
+
+        for (int i=0; i<5; i++) {
+            marker = objMarkers.get(i);
+            setInvisible(marker);
+            marker = npcMarkers.get(i);
+            setInvisible(marker);
+        }
+
+        displayNextEntity(userCount, currentMarker, user);
+    }
+
+    public void displayNextEntity (int userCount, Marker currentMarker, Marker user) {
+        Marker nextMarker;
+        int id;
+        int markerCount = 0;
+
+        switch (userCount) {
+            case 0:
+                id = 0;
+                nextMarker = SingletonData.getMarkers("npc").get(id);
+                setVisible(nextMarker);
+                markerCount = SingletonData.getCounters("npc").get(id);
+                break;
+
+            case 1:
+                id = 0;
+                nextMarker = SingletonData.getMarkers("object").get(id);
+                setVisible(nextMarker);
+                markerCount = SingletonData.getCounters("object").get(id);
+                break;
+
+            case 2:
+                id = 1;
+                nextMarker = SingletonData.getMarkers("npc").get(id);
+                setVisible(nextMarker);
+                markerCount = SingletonData.getCounters("npc").get(id);
+                break;
+
+            case 3:
+                id = 1;
+                nextMarker = SingletonData.getMarkers("object").get(id);
+                setVisible(nextMarker);
+                markerCount = SingletonData.getCounters("object").get(id);
+                break;
+
+            case 4:
+                id = 2;
+                nextMarker = SingletonData.getMarkers("npc").get(id);
+                setVisible(nextMarker);
+                markerCount = SingletonData.getCounters("npc").get(id);
+                break;
+
+            case 5:
+                id = 2;
+                nextMarker = SingletonData.getMarkers("object").get(id);
+                setVisible(nextMarker);
+                markerCount = SingletonData.getCounters("object").get(id);
+                break;
+
+            case 6:
+                id = 3;
+                nextMarker = SingletonData.getMarkers("npc").get(id);
+                setVisible(nextMarker);
+                markerCount = SingletonData.getCounters("npc").get(id);
+                break;
+
+            case 7:
+                id = 3;
+                nextMarker = SingletonData.getMarkers("object").get(id);
+                setVisible(nextMarker);
+                markerCount = SingletonData.getCounters("object").get(id);
+                break;
+
+            case 8:
+                id = 4;
+                nextMarker = SingletonData.getMarkers("npc").get(id);
+                setVisible(nextMarker);
+                markerCount = SingletonData.getCounters("npc").get(id);
+                break;
+
+            case 9:
+                id = 4;
+                nextMarker = SingletonData.getMarkers("object").get(id);
+                setVisible(nextMarker);
+                markerCount = SingletonData.getCounters("object").get(id);
+                break;
+
+            default:
+                break;
+        }
+
+        if (markerCount > 2) {
+            setInvisible(currentMarker); //hide current marker
+        }
+
+        //setInvisible(currentMarker); //hide current marker
+        setVisible(user); //display user on map
+    }
+
+//============================================================================//
+
     public void removeMarker(Marker marker){
         marker.remove();
     }
@@ -105,99 +240,30 @@ public class MarkersHandler extends MapDemoActivity {
 //============================================================================//
     //INTERACTION
 
-    public void startInteraction (Marker marker, int pos, String type) {
+    public void startInteraction (Marker currentMarker, int pos, String type) {
 
-        marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+        if (!type.equals("bonus")){
+            currentMarker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+        }
         SingletonData.incrementCounter(type, pos);
     }
 
-    public void interactionMode (Marker marker, int pos, String type) {
+    public void interactionMode (Marker currentMarker, int pos, String type) {
 
         if (type.equals("bonus")) {
             int bonus = SingletonData.getUser().getBonus() + SingletonData.getBonuses().get(pos).getBonus();
             SingletonData.getUser().setBonus(bonus);
         }
-
         SingletonData.incrementCounter(type, pos);
         SingletonData.incrementUserCount();
     }
 
-    public void terminateInteraction(Marker marker, int pos, String type) {
+    public void terminateInteraction(Marker currentMarker, Marker user, int pos, String type) {
         if (!type.equals("bonus")){
-            displayNextEntity(SingletonData.getUser().getCount(), marker);
+            displayNextEntity(SingletonData.getUser().getCount(), currentMarker, user);
         }
-    }
-
-    public void displayNextEntity (int userCount, Marker previousMarker) {
-        int id;
-        Marker nextMarker;
-
-        switch (userCount) {
-            case 0:
-                id = 0;
-                nextMarker = SingletonData.getMarkers("npc").get(id);
-                setVisible(nextMarker);
-                break;
-
-            case 1:
-                id = 0;
-                nextMarker = SingletonData.getMarkers("object").get(id);
-                setVisible(nextMarker);
-                break;
-
-            case 2:
-                id = 1;
-                nextMarker = SingletonData.getMarkers("npc").get(id);
-                setVisible(nextMarker);
-                break;
-
-            case 3:
-                id = 1;
-                nextMarker = SingletonData.getMarkers("object").get(id);
-                setVisible(nextMarker);
-                break;
-
-            case 4:
-                id = 2;
-                nextMarker = SingletonData.getMarkers("npc").get(id);
-                setVisible(nextMarker);
-                break;
-
-            case 5:
-                id = 2;
-                nextMarker = SingletonData.getMarkers("object").get(id);
-                setVisible(nextMarker);
-                break;
-
-            case 6:
-                id = 3;
-                nextMarker = SingletonData.getMarkers("npc").get(id);
-                setVisible(nextMarker);
-                break;
-
-            case 7:
-                id = 3;
-                nextMarker = SingletonData.getMarkers("object").get(id);
-                setVisible(nextMarker);
-                break;
-
-            case 8:
-                id = 4;
-                nextMarker = SingletonData.getMarkers("npc").get(id);
-                setVisible(nextMarker);
-                break;
-
-            case 9:
-                id = 4;
-                nextMarker = SingletonData.getMarkers("object").get(id);
-                setVisible(nextMarker);
-                break;
-
-            default:
-                break;
-        }
-
-        setInvisible(previousMarker);
+        //if it is bonus, hide it
+        setInvisible(currentMarker);
     }
 
 //============================================================================//

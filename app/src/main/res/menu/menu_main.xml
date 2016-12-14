@@ -17,13 +17,21 @@
         <item
             android:id="@+id/action_profile"
             android:title="Profile"
-            android:icon="@drawable/ic_action_profile"
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_show_markers"
+            android:title="Show all Markers..."
+            app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_hide_markers"
+            android:title="Hide Markers..."
             app:showAsAction="never"/>
 
         <item
             android:id="@+id/action_settings"
             android:title="Settings"
-            android:icon="@drawable/ic_action_settings"
             app:showAsAction="never"/>
 
         <item
