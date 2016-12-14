@@ -201,7 +201,10 @@ public class MapDemoActivity extends AppCompatActivity implements
 				break;
 
 			case R.id.action_logout:
-				startActivity(new Intent(MapDemoActivity.this, MainActivity.class));
+				Intent intent = new Intent(Intent.ACTION_MAIN);
+				intent.addCategory(Intent.CATEGORY_HOME);
+				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				startActivity(intent);
 				break;
 
 			default:

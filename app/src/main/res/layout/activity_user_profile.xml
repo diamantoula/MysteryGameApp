@@ -8,8 +8,8 @@
     tools:context="com.example.mysterygameapp.UserProfile">
 
     <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
+    android:id="@+id/toolbar"
+    layout="@layout/toolbar" />
 
     <TableLayout
         android:layout_width="match_parent"
