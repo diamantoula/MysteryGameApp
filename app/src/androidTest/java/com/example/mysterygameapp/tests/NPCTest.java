@@ -13,9 +13,6 @@ public class NPCTest extends TestCase{
         super.setUp();
     }
 
-
-
-
     //GETTERS
     @SmallTest
     public void testGetNPCId(){

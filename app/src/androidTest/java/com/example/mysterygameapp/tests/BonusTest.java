@@ -64,7 +64,7 @@ public class BonusTest extends TestCase {
 
     //SETTERS
     @SmallTest
-    public void testSetId (int id1) {
+    public void testSetId () {
 
         Bonus bonus = new Bonus();
         bonus.setId(1);
@@ -73,7 +73,7 @@ public class BonusTest extends TestCase {
     }
 
     @SmallTest
-    public void testSetName (String name1) {
+    public void testSetName () {
 
         Bonus bonus = new Bonus();
         bonus.setName("bonus1");
@@ -82,7 +82,7 @@ public class BonusTest extends TestCase {
     }
 
     @SmallTest
-    public void testSetBonus (int bonus1){
+    public void testSetBonus (){
 
         Bonus bonus = new Bonus();
         bonus.setBonus(15);
@@ -91,7 +91,7 @@ public class BonusTest extends TestCase {
     }
 
     @SmallTest
-    public void testSetTaken (String taken1) {
+    public void testSetTaken () {
 
         Bonus bonus = new Bonus();
         bonus.setTaken("no");
@@ -100,7 +100,7 @@ public class BonusTest extends TestCase {
     }
 
     @SmallTest
-    public void testSetLat (double lat1) {
+    public void testSetLat () {
 
         Bonus bonus = new Bonus();
         bonus.setLat(7.5555555);
@@ -109,7 +109,7 @@ public class BonusTest extends TestCase {
     }
 
     @SmallTest
-    public void testSetLng (double lng1) {
+    public void testSetLng () {
 
         Bonus bonus = new Bonus();
         bonus.setLng(9.3333333);
