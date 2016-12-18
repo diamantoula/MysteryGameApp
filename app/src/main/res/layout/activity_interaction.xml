@@ -12,29 +12,39 @@
     tools:context="com.example.mysterygameapp.Interaction">
 
     <TextView
-        android:id="@+id/tvGreetingInteraction"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <Button
-        android:id="@+id/bOpenWindowClue1"
+        android:id="@+id/tvInteractionGreeting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvGreetingInteraction"
+        android:textSize="30dp"
+        android:textStyle="italic"
+        android:background="@android:color/darker_gray"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:textAlignment="gravity"/>
+
+    <Button
+        android:id="@+id/bShowClue1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvInteractionGreeting"
+        android:layout_marginTop="30dp"
         android:text="Show Me First Clue..."/>
 
     <Button
-        android:id="@+id/bOpenWindowClue2"
+        android:id="@+id/bShowClue2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/bOpenWindowClue1"
+        android:layout_below="@+id/bShowClue1"
+        android:layout_marginTop="15dp"
         android:text="Show Me Second Clue..."/>
 
     <Button
-        android:id="@+id/bReturnFromInteraction"
-        android:layout_width="match_parent"
+        android:id="@+id/bInteractionReturn"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/bOpenWindowClue2"
-        android:text="Return..."/>
+        android:layout_below="@+id/bShowClue2"
+        android:layout_marginTop="15dp"
+        android:layout_centerHorizontal="true"
+        android:text="Return"/>
 
 </RelativeLayout>

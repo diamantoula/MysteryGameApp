@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -63,6 +64,7 @@ public class MapDemoActivity extends AppCompatActivity implements
 	private static LatLng userLocation;
 	private static Marker userMarker;
 	private static Marker currentVisitedMarker;
+
 	public final static String MAP_DEMO_ACTIVITY = "MapDemoActivity";
 
 	Toolbar toolbar;
@@ -135,40 +137,24 @@ public class MapDemoActivity extends AppCompatActivity implements
 				clickedMarker.getPosition().latitude,
 				clickedMarker.getPosition().longitude);
 
+		//the marker double clicked will be the user's new position
+		userLocation = clickedMarkerCoordinates;
+		//update userMarker -> set on map and hide until interaction is terminated
+		userMarker = markersHandler.updateUserMarker(map, userMarker, userLocation);
+
 		String title = clickedMarker.getTitle(); //get marker's title
 
 		//if the user is not clicking on the userMarker...
 		if (!title.equals("user")){
 
-			String type = EntityInfo.findEntityType(title);
-			int id = EntityInfo.findEntityID(title); //find entity's id by the title
+			String markerType = EntityInfo.findEntityType(title);
+			int markerId = EntityInfo.findEntityID(title); //find entity's id by the title
 
-			if (  SingletonData.getCounters(type).get(id) == 0 ) {   //marker clicked for the first time
-
-				markersHandler.startInteraction(clickedMarker, id, type);
-				clickedMarker.setSnippet( markersHandler.getSnippetMessage(clickedMarker, getResources(), "greeting") );
-
-			} else if ( SingletonData.getCounters(type).get(id) == 1 ) {
-
-				//the marker double clicked will be the user's new position
-				userLocation = clickedMarkerCoordinates;
-				//update userMarker -> set on map and hide until interaction is terminated
-				userMarker = markersHandler.updateUserMarker(map, userMarker, userLocation);
-
-				markersHandler.interactionMode(clickedMarker, id, type);
-				clickedMarker.setSnippet( markersHandler.getSnippetMessage(clickedMarker, getResources(), "main") );
-
-			} else {
-
-				markersHandler.terminateInteraction(clickedMarker, userMarker, id, type);
-				clickedMarker.setSnippet( markersHandler.getSnippetMessage(clickedMarker, getResources(), "back") );
-				markersHandler.setVisible(userMarker);
-
-			}
-
+			Intent intent = new Intent(MapDemoActivity.this, Interaction.class);
+			intent.putExtra("markerId", markerId);
+			intent.putExtra("markerType", markerType);
+			startActivity(intent);
 		}
-
-		//startActivity(new Intent(MapDemoActivity.this, Interaction.class));
 
 		// Return false to indicate that we have not consumed the event and that we wish for the default behavior to occur
 		return false;
