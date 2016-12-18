@@ -63,7 +63,6 @@ public class MapDemoActivity extends AppCompatActivity implements
 
 	private static LatLng userLocation;
 	private static Marker userMarker;
-	private static Marker currentVisitedMarker;
 
 	public final static String MAP_DEMO_ACTIVITY = "MapDemoActivity";
 
@@ -109,7 +108,7 @@ public class MapDemoActivity extends AppCompatActivity implements
 			//userMarker = markersHandler.setUserOnMap(map, userLocation);
 			userMarker = markersHandler.updateUserMarker(map, userMarker, userLocation);
 			markersHandler.setMarkersOnMap(map);
-			markersHandler.displayNextEntity(SingletonData.getUser().getCount(), userMarker, userMarker);
+			markersHandler.displayNextEntity(SingletonData.getUser().getCount(), userMarker);
 
 			new CameraHandler().setCamera(map, userLocation);
 
@@ -126,20 +125,11 @@ public class MapDemoActivity extends AppCompatActivity implements
 	@Override
 	public boolean onMarkerClick(Marker clickedMarker) {
 
-		//used in hide markers
-		currentVisitedMarker = clickedMarker;
-
-		//Interaction interaction = new Interaction();
-
 		MarkersHandler markersHandler = new MarkersHandler();
 
-		LatLng clickedMarkerCoordinates = new LatLng(
-				clickedMarker.getPosition().latitude,
-				clickedMarker.getPosition().longitude);
-
-		//the marker double clicked will be the user's new position
-		userLocation = clickedMarkerCoordinates;
-		//update userMarker -> set on map and hide until interaction is terminated
+		//the marker clicked will be the user's new position
+		userLocation = new LatLng( clickedMarker.getPosition().latitude, clickedMarker.getPosition().longitude);
+		//update userMarker -> update userMarker and set on map
 		userMarker = markersHandler.updateUserMarker(map, userMarker, userLocation);
 
 		String title = clickedMarker.getTitle(); //get marker's title
@@ -184,7 +174,7 @@ public class MapDemoActivity extends AppCompatActivity implements
 
 			case R.id.action_hide_markers:
 				MarkersHandler  markersHide = new MarkersHandler();
-				markersHide.hideMarkers(SingletonData.getUser().getCount(), currentVisitedMarker, userMarker);
+				markersHide.hideMarkers(SingletonData.getUser().getCount(), userMarker);
 				break;
 
 			case R.id.action_zoom_in:

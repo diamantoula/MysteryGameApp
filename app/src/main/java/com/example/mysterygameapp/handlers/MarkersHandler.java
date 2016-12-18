@@ -49,7 +49,6 @@ public class MarkersHandler extends MapDemoActivity {
             user.remove();
         }
         user = setUserOnMap(map, newLocation);
-        setInvisible(user);
 
         return user;
     }
@@ -122,7 +121,7 @@ public class MarkersHandler extends MapDemoActivity {
         }
     }
 
-    public void hideMarkers (int userCount, Marker currentMarker, Marker user) {
+    public void hideMarkers (int userCount, Marker user) {
         ArrayList<Marker> objMarkers = SingletonData.getMarkers("object");
         ArrayList<Marker> npcMarkers = SingletonData.getMarkers("npc");
         Marker marker;
@@ -134,10 +133,10 @@ public class MarkersHandler extends MapDemoActivity {
             setInvisible(marker);
         }
 
-        displayNextEntity(userCount, currentMarker, user);
+        displayNextEntity(userCount, user);
     }
 
-    public void displayNextEntity (int userCount, Marker currentMarker, Marker user) {
+    public void displayNextEntity (int userCount, Marker user) {
         Marker nextMarker;
         int id;
         int markerCount = 0;
@@ -217,10 +216,6 @@ public class MarkersHandler extends MapDemoActivity {
                 break;
         }
 
-        if (markerCount > 2) {
-            setInvisible(currentMarker); //hide current marker
-        }
-
         //setInvisible(currentMarker); //hide current marker
         setVisible(user); //display user on map
     }
@@ -260,107 +255,10 @@ public class MarkersHandler extends MapDemoActivity {
         SingletonData.incrementUserCount();
     }
 
-    public void terminateInteraction(Marker currentMarker, Marker user, int pos, String type) {
+    public void terminateInteraction(Marker user, int pos, String type) {
         if (!type.equals("bonus")){
-            displayNextEntity(SingletonData.getUser().getCount(), currentMarker, user);
+            displayNextEntity(SingletonData.getUser().getCount(), user);
         }
-        //if it is bonus, hide it
-        setInvisible(currentMarker);
     }
 
-//============================================================================//
-
-    public String getSnippetMessage (Marker marker, Resources res, String messageType) {
-        String message;
-
-        String title = marker.getTitle();
-        String type = EntityInfo.findEntityType(title);
-
-        switch (type) {
-            case "object":
-                message = getObjMessage(title, res, messageType);
-                break;
-            case "npc":
-                message = getNpcMessage(title, res, messageType);
-                break;
-            case "bonus":
-                message = getBonusMessage(title, res, messageType);
-                break;
-            default:
-                message = "";
-                break;
-        }
-
-        return message;
-    }
-
-    //RETRIEVE OBJECT MESSAGE FROM XML
-    public String getObjMessage (String title, Resources res, String messageType) {
-        String message;
-
-        switch (messageType) {
-            case "greeting":
-                message = res.getString(R.string.objectGreeting);
-                break;
-            case "main":
-                String[] clueArray = res.getStringArray(R.array.objects_clues);
-                int id = EntityInfo.findEntityID(title);
-                message = clueArray[id];
-                break;
-            case "back":
-                message = res.getString(R.string.objectBack);
-                break;
-            default:
-                message = "";
-                break;
-        }
-
-        return message;
-    }
-
-    //RETRIEVE NPC MESSAGE FROM XML
-    public String getNpcMessage (String title, Resources res, String messageType) {
-        String message;
-
-        switch (messageType) {
-            case "greeting":
-                message = res.getString(R.string.npcGreeting);
-                break;
-            case "main":
-                String[] clueArray = res.getStringArray(R.array.npcs_clues);
-                int id = EntityInfo.findEntityID(title);
-                message = clueArray[id];
-                break;
-            case "back":
-                message = res.getString(R.string.npcBack);
-                break;
-            default:
-                message = "";
-                break;
-        }
-
-        return message;
-    }
-
-    //RETRIEVE BONUS MESSAGE FROM XML
-    public String getBonusMessage (String title, Resources res, String messageType) {
-        String message;
-
-        switch (messageType) {
-            case "greeting":
-                message = res.getString(R.string.bonusGreeting);
-                break;
-            case "main":
-                message = res.getString(R.string.bonusTaken);
-                break;
-            case "back":
-                message = res.getString(R.string.bonusBack);
-                break;
-            default:
-                message = "";
-                break;
-        }
-
-        return message;
-    }
 }

@@ -103,6 +103,7 @@ public class Interaction extends AppCompatActivity implements View.OnClickListen
     }
 
 //================================================================================================//
+    //SETTING TEXTVIEWS
 
     public void setTvGreeting (String markerType) {
         String message;
@@ -146,6 +147,9 @@ public class Interaction extends AppCompatActivity implements View.OnClickListen
         }
         tvClue.setText(message);
     }
+
+//================================================================================================//
+    //RETRIEVING STRING CLUES FROM XML
 
     //RETRIEVE OBJECT MESSAGE FROM XML
     public String getObjectMessage (int id, int clueNumber) {
@@ -201,14 +205,14 @@ public class Interaction extends AppCompatActivity implements View.OnClickListen
 
         MarkersHandler markersHandler = new MarkersHandler();
         markersHandler.startInteraction(clickedMarker, markerId, markerType);
-        clickedMarker.setSnippet( markersHandler.getSnippetMessage(clickedMarker, res, "tvGreeting") );
+        //clickedMarker.setSnippet( markersHandler.getSnippetMessage(clickedMarker, res, "tvGreeting") );
     }
 
     public void interactionClue1 (Marker clickedMarker, int markerId, String markerType, Resources res) {
 
         MarkersHandler markersHandler = new MarkersHandler();
         markersHandler.interactionMode(clickedMarker, markerId, markerType);
-        clickedMarker.setSnippet( markersHandler.getSnippetMessage(clickedMarker, res, "main") );
+        //clickedMarker.setSnippet( markersHandler.getSnippetMessage(clickedMarker, res, "main") );
     }
 
     public void interactionClue2 (Marker clickedMarker, int markerId, String markerType, Resources res) {
@@ -218,8 +222,8 @@ public class Interaction extends AppCompatActivity implements View.OnClickListen
     public void interactionBack (Marker clickedMarker, Marker userMarker, int markerId, String markerType, Resources res) {
 
         MarkersHandler markersHandler = new MarkersHandler();
-        markersHandler.terminateInteraction(clickedMarker, userMarker, markerId, markerType);
-        clickedMarker.setSnippet( markersHandler.getSnippetMessage(clickedMarker, res, "back") );
+        markersHandler.terminateInteraction(userMarker, markerId, markerType);
+        //clickedMarker.setSnippet( markersHandler.getSnippetMessage(clickedMarker, res, "back") );
     }
 
 }
