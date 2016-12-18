@@ -29,7 +29,7 @@ public class MarkersHandler extends MapDemoActivity {
 //============================================================================//
     //DISPLAYING MARKERS
 
-    //CALLED ONCONNECTED
+    //CALLED UPDATEUSERMARKER
     public Marker setUserOnMap(GoogleMap map, LatLng location){
 
         Marker marker = map.addMarker(new MarkerOptions()
@@ -45,7 +45,9 @@ public class MarkersHandler extends MapDemoActivity {
 
     //CALLED ONMARKERCLICK (first time click)
     public Marker updateUserMarker(GoogleMap map, Marker user, LatLng newLocation){
-        user.remove();
+        if (user != null) {
+            user.remove();
+        }
         user = setUserOnMap(map, newLocation);
         setInvisible(user);
 

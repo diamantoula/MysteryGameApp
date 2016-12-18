@@ -3,7 +3,6 @@ package com.example.mysterygameapp.singletons;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 
-import com.example.mysterygameapp.SaveLoadHandler;
 import com.example.mysterygameapp.handlers.MarkersHandler;
 import com.example.mysterygameapp.modelsDB.Bonus;
 import com.example.mysterygameapp.modelsDB.Character;

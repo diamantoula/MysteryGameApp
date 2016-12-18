@@ -67,11 +67,17 @@
         </activity>
         <activity android:name=".CharacterOptions">
         </activity>
-        <activity android:name=".test.Test">
+        <activity android:name=".test.Sample">
         </activity>
         <activity android:name=".UserProfile">
         </activity>
         <activity android:name=".loginregister.Register">
+        </activity>
+        <activity android:name=".handlers.SaveHandler">
+        </activity>
+        <activity android:name=".handlers.LoadHandler">
+        </activity>
+        <activity android:name=".Interaction">
         </activity>
     </application>
 

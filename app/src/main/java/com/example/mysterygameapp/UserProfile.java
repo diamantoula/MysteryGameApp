@@ -20,8 +20,6 @@ import com.example.mysterygameapp.singletons.SingletonData;
 import com.example.mysterygameapp.staticData.CharactersData;
 import com.example.mysterygameapp.staticData.UserData;
 
-import static com.example.mysterygameapp.StartOptions.USER_BONUS;
-
 public class UserProfile extends AppCompatActivity {
 
     TextView tvUsername;
@@ -98,10 +96,6 @@ public class UserProfile extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch ( item.getItemId() ) {
-
-            case R.id.action_profile:
-                startActivity(new Intent(UserProfile.this, UserProfile.class));
-                break;
 
             case R.id.action_logout:
                 Intent intent = new Intent(Intent.ACTION_MAIN);

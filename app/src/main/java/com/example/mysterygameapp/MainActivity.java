@@ -9,6 +9,7 @@ import android.widget.Button;
 import com.example.mysterygameapp.loginregister.Login;
 import com.example.mysterygameapp.loginregister.Register;
 import com.example.mysterygameapp.singletons.SingletonData;
+import com.example.mysterygameapp.test.Sample;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -33,7 +34,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.registerMain:
-                startActivity(new Intent(MainActivity.this, Register.class));
+                //startActivity(new Intent(MainActivity.this, Register.class));
+                startActivity(new Intent(MainActivity.this, Sample.class));
                 break;
         }
 

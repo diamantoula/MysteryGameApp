@@ -11,13 +11,19 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.mysterygameapp.handlers.CameraHandler;
 import com.example.mysterygameapp.handlers.MarkersHandler;
+import com.example.mysterygameapp.handlers.SaveHandler;
 import com.example.mysterygameapp.singletons.SingletonData;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -34,6 +40,10 @@ import com.google.android.gms.maps.model.Marker;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
 
+import static com.example.mysterygameapp.handlers.SaveHandler.TARGET_INTENT;
+import static com.example.mysterygameapp.handlers.SaveHandler.USER_BONUS;
+import static com.example.mysterygameapp.handlers.SaveHandler.USER_COUNT;
+
 @RuntimePermissions
 public class MapDemoActivity extends AppCompatActivity implements
 		GoogleApiClient.ConnectionCallbacks,
@@ -42,7 +52,7 @@ public class MapDemoActivity extends AppCompatActivity implements
 		GoogleMap.OnMarkerClickListener {
 
 	private SupportMapFragment mapFragment;
-	private GoogleMap map;
+	public GoogleMap map;
 	private GoogleApiClient mGoogleApiClient;
 	private LocationRequest mLocationRequest;
 	private long UPDATE_INTERVAL = 60000;  /* 60 secs */
@@ -53,6 +63,7 @@ public class MapDemoActivity extends AppCompatActivity implements
 	private static LatLng userLocation;
 	private static Marker userMarker;
 	private static Marker currentVisitedMarker;
+	public final static String MAP_DEMO_ACTIVITY = "MapDemoActivity";
 
 	Toolbar toolbar;
 
@@ -92,7 +103,9 @@ public class MapDemoActivity extends AppCompatActivity implements
 			userLocation = latLng;
 
 			MarkersHandler markersHandler = new MarkersHandler();
-			userMarker = markersHandler.setUserOnMap(map, userLocation);
+
+			//userMarker = markersHandler.setUserOnMap(map, userLocation);
+			userMarker = markersHandler.updateUserMarker(map, userMarker, userLocation);
 			markersHandler.setMarkersOnMap(map);
 			markersHandler.displayNextEntity(SingletonData.getUser().getCount(), userMarker, userMarker);
 
@@ -111,7 +124,10 @@ public class MapDemoActivity extends AppCompatActivity implements
 	@Override
 	public boolean onMarkerClick(Marker clickedMarker) {
 
+		//used in hide markers
 		currentVisitedMarker = clickedMarker;
+
+		//Interaction interaction = new Interaction();
 
 		MarkersHandler markersHandler = new MarkersHandler();
 
@@ -152,15 +168,10 @@ public class MapDemoActivity extends AppCompatActivity implements
 
 		}
 
+		//startActivity(new Intent(MapDemoActivity.this, Interaction.class));
+
 		// Return false to indicate that we have not consumed the event and that we wish for the default behavior to occur
 		return false;
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-
-		Toast.makeText(getApplicationContext(), "saved", Toast.LENGTH_SHORT).show();
 	}
 
 	@Override
@@ -200,17 +211,26 @@ public class MapDemoActivity extends AppCompatActivity implements
 				zoomOut.cameraZoomOut(map, userMarker.getPosition());
 				break;
 
+			case R.id.action_save:
+				startActivity(new Intent(MapDemoActivity.this, SaveHandler.class));
+				break;
+
 			case R.id.action_logout:
-				Intent intent = new Intent(Intent.ACTION_MAIN);
-				intent.addCategory(Intent.CATEGORY_HOME);
-				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				startActivity(intent);
+				Intent logoutIntent = new Intent(Intent.ACTION_MAIN);
+				logoutIntent.addCategory(Intent.CATEGORY_HOME);
+				logoutIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				startActivity(logoutIntent);
 				break;
 
 			default:
 				break;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
 	}
 
 //================================================================================================//

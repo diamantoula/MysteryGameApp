@@ -7,10 +7,6 @@
     android:layout_height="match_parent"
     tools:context="com.example.mysterygameapp.StartOptions">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
-
     <Button
         android:id = "@+id/startBtn"
         android:layout_width="match_parent"
