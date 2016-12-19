@@ -1,20 +1,11 @@
 package com.example.mysterygameapp.handlers;
 
-import android.content.res.Resources;
-import android.widget.Toast;
-
-import com.example.mysterygameapp.EntityInfo;
 import com.example.mysterygameapp.MapDemoActivity;
-import com.example.mysterygameapp.R;
 import com.example.mysterygameapp.modelsDB.Bonus;
 import com.example.mysterygameapp.modelsDB.NPC;
 import com.example.mysterygameapp.modelsDB.Object;
 import com.example.mysterygameapp.singletons.SingletonData;
-import com.example.mysterygameapp.staticData.BonusData;
-import com.example.mysterygameapp.staticData.CountersData;
 import com.example.mysterygameapp.staticData.MarkersData;
-import com.example.mysterygameapp.staticData.NPCsData;
-import com.example.mysterygameapp.staticData.ObjectsData;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -22,14 +13,13 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class MarkersHandler extends MapDemoActivity {
 
 //============================================================================//
     //DISPLAYING MARKERS
 
-    //CALLED UPDATEUSERMARKER
+    //CALLED ON ON_CONNECTED AND UPDATE_USER_MARKER
     public Marker setUserOnMap(GoogleMap map, LatLng location){
 
         Marker marker = map.addMarker(new MarkerOptions()
@@ -43,7 +33,7 @@ public class MarkersHandler extends MapDemoActivity {
         return marker;
     }
 
-    //CALLED ONMARKERCLICK (first time click)
+    //CALLED ON MARKER ON_CLICK (first time click)
     public Marker updateUserMarker(GoogleMap map, Marker user, LatLng newLocation){
         if (user != null) {
             user.remove();
@@ -53,8 +43,8 @@ public class MarkersHandler extends MapDemoActivity {
         return user;
     }
 
-    //CALLED ONCONNECTED
-    public void setMarkersOnMap(GoogleMap map){
+    //CALLED ON_CONNECTED
+    public void setMarkersOnMap(GoogleMap map, int startPos, Marker userMarker){
 
         ArrayList<Object> objs = SingletonData.getObjects();
         ArrayList<NPC> npcs = SingletonData.getNPCs();
@@ -63,7 +53,7 @@ public class MarkersHandler extends MapDemoActivity {
         LatLng latLng;
 
         //objects
-        for (int i=0; i<5; i++) {
+        for (int i=startPos; i<5; i++) {
             latLng = new LatLng(objs.get(i).getLat(), objs.get(i).getLng());
             marker = map.addMarker(new MarkerOptions()
                     .position(latLng)
@@ -76,7 +66,7 @@ public class MarkersHandler extends MapDemoActivity {
         }
 
         //npcs
-        for (int i=0; i<5; i++) {
+        for (int i=startPos; i<5; i++) {
             latLng = new LatLng(npcs.get(i).getLat(), npcs.get(i).getLng());
             marker = map.addMarker(new MarkerOptions()
                     .position(latLng)
@@ -89,7 +79,7 @@ public class MarkersHandler extends MapDemoActivity {
         }
 
         //bonus
-        for (int i=0; i<5; i++) {
+        for (int i=startPos; i<5; i++) {
             latLng = new LatLng(bonus.get(i).getLat(), bonus.get(i).getLng());
             marker = map.addMarker(new MarkerOptions()
                     .position(latLng)
@@ -106,6 +96,8 @@ public class MarkersHandler extends MapDemoActivity {
         SingletonData.setMarkers(MarkersData.getMarkers("object"), "object");
         SingletonData.setMarkers(MarkersData.getMarkers("npc"), "npc");
         SingletonData.setMarkers(MarkersData.getMarkers("bonus"), "bonus");
+
+        displayNextEntity(startPos, userMarker);
     }
 
     public void showAllMarkers () {
@@ -139,84 +131,72 @@ public class MarkersHandler extends MapDemoActivity {
     public void displayNextEntity (int userCount, Marker user) {
         Marker nextMarker;
         int id;
-        int markerCount = 0;
 
         switch (userCount) {
             case 0:
                 id = 0;
                 nextMarker = SingletonData.getMarkers("npc").get(id);
                 setVisible(nextMarker);
-                markerCount = SingletonData.getCounters("npc").get(id);
                 break;
 
             case 1:
                 id = 0;
                 nextMarker = SingletonData.getMarkers("object").get(id);
                 setVisible(nextMarker);
-                markerCount = SingletonData.getCounters("object").get(id);
                 break;
 
             case 2:
                 id = 1;
                 nextMarker = SingletonData.getMarkers("npc").get(id);
                 setVisible(nextMarker);
-                markerCount = SingletonData.getCounters("npc").get(id);
                 break;
 
             case 3:
                 id = 1;
                 nextMarker = SingletonData.getMarkers("object").get(id);
                 setVisible(nextMarker);
-                markerCount = SingletonData.getCounters("object").get(id);
                 break;
 
             case 4:
                 id = 2;
                 nextMarker = SingletonData.getMarkers("npc").get(id);
                 setVisible(nextMarker);
-                markerCount = SingletonData.getCounters("npc").get(id);
                 break;
 
             case 5:
                 id = 2;
                 nextMarker = SingletonData.getMarkers("object").get(id);
                 setVisible(nextMarker);
-                markerCount = SingletonData.getCounters("object").get(id);
                 break;
 
             case 6:
                 id = 3;
                 nextMarker = SingletonData.getMarkers("npc").get(id);
                 setVisible(nextMarker);
-                markerCount = SingletonData.getCounters("npc").get(id);
                 break;
 
             case 7:
                 id = 3;
                 nextMarker = SingletonData.getMarkers("object").get(id);
                 setVisible(nextMarker);
-                markerCount = SingletonData.getCounters("object").get(id);
                 break;
 
             case 8:
                 id = 4;
                 nextMarker = SingletonData.getMarkers("npc").get(id);
                 setVisible(nextMarker);
-                markerCount = SingletonData.getCounters("npc").get(id);
                 break;
 
             case 9:
                 id = 4;
                 nextMarker = SingletonData.getMarkers("object").get(id);
                 setVisible(nextMarker);
-                markerCount = SingletonData.getCounters("object").get(id);
                 break;
 
             default:
                 break;
         }
 
-        //setInvisible(currentMarker); //hide current marker
         setVisible(user); //display user on map
     }
 
@@ -236,24 +216,6 @@ public class MarkersHandler extends MapDemoActivity {
 
 //============================================================================//
     //INTERACTION
-
-    public void startInteraction (Marker currentMarker, int pos, String type) {
-
-        if (!type.equals("bonus")){
-            currentMarker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
-        }
-        SingletonData.incrementCounter(type, pos);
-    }
-
-    public void interactionMode (Marker currentMarker, int pos, String type) {
-
-        if (type.equals("bonus")) {
-            int bonus = SingletonData.getUser().getBonus() + SingletonData.getBonuses().get(pos).getBonus();
-            SingletonData.getUser().setBonus(bonus);
-        }
-        SingletonData.incrementCounter(type, pos);
-        SingletonData.incrementUserCount();
-    }
 
     public void terminateInteraction(Marker user, int pos, String type) {
         if (!type.equals("bonus")){

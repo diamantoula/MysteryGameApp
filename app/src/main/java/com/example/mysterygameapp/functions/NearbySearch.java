@@ -1,4 +1,4 @@
-package com.example.mysterygameapp;
+package com.example.mysterygameapp.functions;
 
 import android.location.Location;
 

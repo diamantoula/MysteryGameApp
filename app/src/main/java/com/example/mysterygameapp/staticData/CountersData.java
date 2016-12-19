@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class CountersData {
 
-    private static ArrayList<Integer> objCounters = new ArrayList<>();
+    /*private static ArrayList<Integer> objCounters = new ArrayList<>();
     private static ArrayList<Integer> npcCounters = new ArrayList<>();
     private static ArrayList<Integer> bonusCounters = new ArrayList<>();
 
@@ -57,6 +57,6 @@ public class CountersData {
             default:
                 return -1;
         }
-    }
+    }*/
 
 }

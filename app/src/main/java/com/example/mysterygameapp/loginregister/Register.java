@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.mysterygameapp.CharacterOptions;
+import com.example.mysterygameapp.startupActions.CharacterOptions;
 import com.example.mysterygameapp.R;
 
 public class Register extends AppCompatActivity implements View.OnClickListener{

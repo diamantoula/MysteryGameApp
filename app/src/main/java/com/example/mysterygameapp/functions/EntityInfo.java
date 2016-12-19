@@ -1,4 +1,4 @@
-package com.example.mysterygameapp;
+package com.example.mysterygameapp.functions;
 
 import com.example.mysterygameapp.modelsDB.Bonus;
 import com.example.mysterygameapp.modelsDB.NPC;

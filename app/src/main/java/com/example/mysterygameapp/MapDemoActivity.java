@@ -5,24 +5,20 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.ViewGroup;
-import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.mysterygameapp.functions.EntityInfo;
 import com.example.mysterygameapp.handlers.CameraHandler;
+import com.example.mysterygameapp.handlers.InteractionHandler;
 import com.example.mysterygameapp.handlers.MarkersHandler;
 import com.example.mysterygameapp.handlers.SaveHandler;
 import com.example.mysterygameapp.singletons.SingletonData;
@@ -40,10 +36,6 @@ import com.google.android.gms.maps.model.Marker;
 
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
-
-import static com.example.mysterygameapp.handlers.SaveHandler.TARGET_INTENT;
-import static com.example.mysterygameapp.handlers.SaveHandler.USER_BONUS;
-import static com.example.mysterygameapp.handlers.SaveHandler.USER_COUNT;
 
 @RuntimePermissions
 public class MapDemoActivity extends AppCompatActivity implements
@@ -101,13 +93,25 @@ public class MapDemoActivity extends AppCompatActivity implements
 			Toast.makeText(this, "GPS location was found!", Toast.LENGTH_SHORT).show();
 			LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 
-			userLocation = latLng;
-
 			MarkersHandler markersHandler = new MarkersHandler();
 
+			//user first time in the game
+			if (userMarker==null) {
+				userLocation = latLng;
+				userMarker = markersHandler.setUserOnMap(map, userLocation);
+				markersHandler.setMarkersOnMap(map, 0, userMarker);
+
+			} else {
+				userMarker = markersHandler.updateUserMarker(map, userMarker, userLocation);
+				markersHandler.setMarkersOnMap(map, SingletonData.getUser().getCount(), userMarker);
+				markersHandler.displayNextEntity(SingletonData.getUser().getCount(), userMarker);
+			}
+
+			//userLocation = latLng;
 			//userMarker = markersHandler.setUserOnMap(map, userLocation);
-			userMarker = markersHandler.updateUserMarker(map, userMarker, userLocation);
-			markersHandler.setMarkersOnMap(map);
+
+			//userMarker = markersHandler.updateUserMarker(map, userMarker, userLocation);
+			//markersHandler.setMarkersOnMap(map);
 			markersHandler.displayNextEntity(SingletonData.getUser().getCount(), userMarker);
 
 			new CameraHandler().setCamera(map, userLocation);
@@ -140,7 +144,7 @@ public class MapDemoActivity extends AppCompatActivity implements
 			String markerType = EntityInfo.findEntityType(title);
 			int markerId = EntityInfo.findEntityID(title); //find entity's id by the title
 
-			Intent intent = new Intent(MapDemoActivity.this, Interaction.class);
+			Intent intent = new Intent(MapDemoActivity.this, InteractionHandler.class);
 			intent.putExtra("markerId", markerId);
 			intent.putExtra("markerType", markerType);
 			startActivity(intent);

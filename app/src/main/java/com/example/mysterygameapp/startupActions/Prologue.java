@@ -1,4 +1,4 @@
-package com.example.mysterygameapp;
+package com.example.mysterygameapp.startupActions;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.mysterygameapp.MapDemoActivity;
+import com.example.mysterygameapp.R;
 
 public class Prologue extends AppCompatActivity implements View.OnClickListener{
 

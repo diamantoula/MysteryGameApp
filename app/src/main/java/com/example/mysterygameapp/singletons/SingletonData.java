@@ -29,9 +29,9 @@ public class SingletonData extends AppCompatActivity {
     private static ArrayList<NPC> npcs;
     private static ArrayList<Bonus> bonuses;
 
-    private static ArrayList<Integer> objCounters;
-    private static ArrayList<Integer> npcCounters;
-    private static ArrayList<Integer> bonusCounters;
+    //private static ArrayList<Integer> objCounters;
+    //private static ArrayList<Integer> npcCounters;
+    //private static ArrayList<Integer> bonusCounters;
 
     private static ArrayList<Marker> objMarkers;
     private static ArrayList<Marker> npcMarkers;
@@ -53,7 +53,7 @@ public class SingletonData extends AppCompatActivity {
         ObjectsData.setObjects();
         NPCsData.setNpcs();
         BonusData.setBonuses();
-        CountersData.setCounters();
+        //CountersData.setCounters();
         CharactersData.setCharacters();
         UserData.setUser();
         //set markers
@@ -63,9 +63,9 @@ public class SingletonData extends AppCompatActivity {
         objects = ObjectsData.getObjects();
         npcs = NPCsData.getNPCs();
         bonuses = BonusData.getBonuses();
-        objCounters = CountersData.getCounters("object");
-        npcCounters = CountersData.getCounters("npc");
-        bonusCounters = CountersData.getCounters("bonus");
+        //objCounters = CountersData.getCounters("object");
+        //npcCounters = CountersData.getCounters("npc");
+        //bonusCounters = CountersData.getCounters("bonus");
         characters = CharactersData.getCharacters();
         user = UserData.getUser();
         //objMarkers; npcMarkers; bonusMarkers;
@@ -74,7 +74,7 @@ public class SingletonData extends AppCompatActivity {
 //================================================================================================//
     //COUNTERS GET, INCREMENT, DECREMENT
 
-    public static ArrayList<Integer> getCounters (String type) {
+    /*public static ArrayList<Integer> getCounters (String type) {
 
         switch (type) {
             case "object":
@@ -134,7 +134,7 @@ public class SingletonData extends AppCompatActivity {
             default:
                 break;
         }
-    }
+    }*/
 
 //================================================================================================//
     //MARKERS SET, GET

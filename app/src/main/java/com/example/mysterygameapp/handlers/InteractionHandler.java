@@ -1,8 +1,7 @@
-package com.example.mysterygameapp;
+package com.example.mysterygameapp.handlers;
 
 import android.content.Intent;
 import android.content.res.Resources;
-import android.os.ParcelUuid;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -14,10 +13,12 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.mysterygameapp.handlers.MarkersHandler;
+import com.example.mysterygameapp.MapDemoActivity;
+import com.example.mysterygameapp.R;
+import com.example.mysterygameapp.singletons.SingletonData;
 import com.google.android.gms.maps.model.Marker;
 
-public class Interaction extends AppCompatActivity implements View.OnClickListener {
+public class InteractionHandler extends AppCompatActivity implements View.OnClickListener {
 
     //INTERACTION LAYOUT
     RelativeLayout interactionLayout;
@@ -93,7 +94,16 @@ public class Interaction extends AppCompatActivity implements View.OnClickListen
                 break;
 
             case R.id.bInteractionReturn:
-                startActivity(new Intent(Interaction.this, MapDemoActivity.class));
+                //if user clicked on bonus -> set user bonus
+                if (mType.equals("bonus")) {
+                    int bonus = SingletonData.getUser().getBonus() + SingletonData.getBonuses().get(mId).getBonus();
+                    SingletonData.getUser().setBonus(bonus);
+                } else {
+                    //if user clicked on object or npc -> increment user count
+                    SingletonData.incrementUserCount();
+                }
+
+                startActivity(new Intent(InteractionHandler.this, MapDemoActivity.class));
                 break;
 
             default:
@@ -112,12 +122,15 @@ public class Interaction extends AppCompatActivity implements View.OnClickListen
             case "object":
                 message = getResources().getString(R.string.objectGreeting);
                 break;
+
             case "npc":
                 message = getResources().getString(R.string.npcGreeting);
                 break;
+
             case "bonus":
                 message = getResources().getString(R.string.bonusGreeting);
                 break;
+
             default:
                 message = "Hello...";
                 break;
@@ -130,14 +143,18 @@ public class Interaction extends AppCompatActivity implements View.OnClickListen
 
         switch (markerType) {
             case "object":
+                //increment Counters and user Counter
                 message = getObjectMessage(id, clueNumber);
                 break;
 
             case "npc":
+                //increment Counters and user Counter
                 message = getNPCMessage(id, clueNumber);
                 break;
 
             case "bonus":
+                //increment Counters and user Counter
+                //increment user Bonus
                 message = getBonusMessage();
                 break;
 
@@ -196,34 +213,6 @@ public class Interaction extends AppCompatActivity implements View.OnClickListen
 
         String message = getResources().getString(R.string.bonusTaken);
         return message;
-    }
-
-//================================================================================================//
-    //INTERACTION ACTIONS
-
-    public void interactionGreeting (Marker clickedMarker, int markerId, String markerType, Resources res) {
-
-        MarkersHandler markersHandler = new MarkersHandler();
-        markersHandler.startInteraction(clickedMarker, markerId, markerType);
-        //clickedMarker.setSnippet( markersHandler.getSnippetMessage(clickedMarker, res, "tvGreeting") );
-    }
-
-    public void interactionClue1 (Marker clickedMarker, int markerId, String markerType, Resources res) {
-
-        MarkersHandler markersHandler = new MarkersHandler();
-        markersHandler.interactionMode(clickedMarker, markerId, markerType);
-        //clickedMarker.setSnippet( markersHandler.getSnippetMessage(clickedMarker, res, "main") );
-    }
-
-    public void interactionClue2 (Marker clickedMarker, int markerId, String markerType, Resources res) {
-
-    }
-
-    public void interactionBack (Marker clickedMarker, Marker userMarker, int markerId, String markerType, Resources res) {
-
-        MarkersHandler markersHandler = new MarkersHandler();
-        markersHandler.terminateInteraction(userMarker, markerId, markerType);
-        //clickedMarker.setSnippet( markersHandler.getSnippetMessage(clickedMarker, res, "back") );
     }
 
 }

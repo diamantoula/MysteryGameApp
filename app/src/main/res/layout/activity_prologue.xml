@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.mysterygameapp.Prologue">
+    tools:context="com.example.mysterygameapp.startupActions.Prologue">
 
     <TextView
         android:id="@+id/prologueHeader"

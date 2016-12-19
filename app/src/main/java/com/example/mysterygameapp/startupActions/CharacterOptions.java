@@ -1,4 +1,4 @@
-package com.example.mysterygameapp;
+package com.example.mysterygameapp.startupActions;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +9,7 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.example.mysterygameapp.R;
 import com.example.mysterygameapp.loginregister.Login;
 import com.example.mysterygameapp.modelsDB.Character;
 import com.example.mysterygameapp.singletons.SingletonData;

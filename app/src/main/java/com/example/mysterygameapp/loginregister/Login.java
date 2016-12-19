@@ -8,17 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.mysterygameapp.R;
-import com.example.mysterygameapp.StartOptions;
-import com.example.mysterygameapp.modelsDB.Bonus;
-import com.example.mysterygameapp.modelsDB.Character;
-import com.example.mysterygameapp.modelsDB.NPC;
-import com.example.mysterygameapp.modelsDB.Object;
+import com.example.mysterygameapp.startupActions.StartOptions;
 import com.example.mysterygameapp.modelsDB.User;
-import com.example.mysterygameapp.singletons.SingletonData;
 import com.example.mysterygameapp.staticData.UserData;
-import com.google.android.gms.maps.model.Marker;
-
-import java.util.ArrayList;
 
 public class Login extends AppCompatActivity implements View.OnClickListener{
 

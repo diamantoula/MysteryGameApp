@@ -1,4 +1,4 @@
-package com.example.mysterygameapp;
+package com.example.mysterygameapp.startupActions;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.mysterygameapp.R;
 import com.example.mysterygameapp.loginregister.Login;
-import com.example.mysterygameapp.loginregister.Register;
 import com.example.mysterygameapp.singletons.SingletonData;
 import com.example.mysterygameapp.test.Sample;
 
