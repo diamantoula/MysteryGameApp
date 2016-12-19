@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mysterygameapp.MapDemoActivity;
 import com.example.mysterygameapp.R;
@@ -69,6 +70,12 @@ public class InteractionHandler extends AppCompatActivity implements View.OnClic
         mType = getIntent().getStringExtra("markerType");
 
         setTvGreeting(mType);
+
+        //if user clicked on bonus -> increment user bonus
+        if (mType.equals("bonus")) {
+            int bonus = SingletonData.getUser().getBonus() + SingletonData.getBonuses().get(mId).getBonus();
+            SingletonData.getUser().setBonus(bonus);
+        }
     }
 
     @Override
@@ -95,10 +102,7 @@ public class InteractionHandler extends AppCompatActivity implements View.OnClic
 
             case R.id.bInteractionReturn:
                 //if user clicked on bonus -> set user bonus
-                if (mType.equals("bonus")) {
-                    int bonus = SingletonData.getUser().getBonus() + SingletonData.getBonuses().get(mId).getBonus();
-                    SingletonData.getUser().setBonus(bonus);
-                } else {
+                if (!mType.equals("bonus")) {
                     //if user clicked on object or npc -> increment user count
                     SingletonData.incrementUserCount();
                 }

@@ -96,23 +96,17 @@ public class MapDemoActivity extends AppCompatActivity implements
 			MarkersHandler markersHandler = new MarkersHandler();
 
 			//user first time in the game
-			if (userMarker==null) {
+			if ( (userMarker==null) && (userLocation==null) && (SingletonData.getUser().getCount()==0) ) {
+				markersHandler.setMarkersOnMap(map, 0);
 				userLocation = latLng;
-				userMarker = markersHandler.setUserOnMap(map, userLocation);
-				markersHandler.setMarkersOnMap(map, 0, userMarker);
+				userMarker = markersHandler.setUserOnMap(map, userLocation, userMarker);
+				markersHandler.displayNextEntity(map, SingletonData.getUser().getCount());
 
 			} else {
-				userMarker = markersHandler.updateUserMarker(map, userMarker, userLocation);
-				markersHandler.setMarkersOnMap(map, SingletonData.getUser().getCount(), userMarker);
-				markersHandler.displayNextEntity(SingletonData.getUser().getCount(), userMarker);
+				markersHandler.setMarkersOnMap(map, SingletonData.getUser().getCount());
+				markersHandler.displayNextEntity(map, SingletonData.getUser().getCount());
+				userMarker = markersHandler.setUserOnMap(map, userLocation, userMarker);
 			}
-
-			//userLocation = latLng;
-			//userMarker = markersHandler.setUserOnMap(map, userLocation);
-
-			//userMarker = markersHandler.updateUserMarker(map, userMarker, userLocation);
-			//markersHandler.setMarkersOnMap(map);
-			markersHandler.displayNextEntity(SingletonData.getUser().getCount(), userMarker);
 
 			new CameraHandler().setCamera(map, userLocation);
 
@@ -134,7 +128,8 @@ public class MapDemoActivity extends AppCompatActivity implements
 		//the marker clicked will be the user's new position
 		userLocation = new LatLng( clickedMarker.getPosition().latitude, clickedMarker.getPosition().longitude);
 		//update userMarker -> update userMarker and set on map
-		userMarker = markersHandler.updateUserMarker(map, userMarker, userLocation);
+		//userMarker = markersHandler.updateUserMarker(map, userMarker, userLocation);
+		userMarker = markersHandler.setUserOnMap(map, userLocation, userMarker);
 
 		String title = clickedMarker.getTitle(); //get marker's title
 
@@ -178,7 +173,7 @@ public class MapDemoActivity extends AppCompatActivity implements
 
 			case R.id.action_hide_markers:
 				MarkersHandler  markersHide = new MarkersHandler();
-				markersHide.hideMarkers(SingletonData.getUser().getCount(), userMarker);
+				markersHide.hideMarkers();
 				break;
 
 			case R.id.action_zoom_in:
