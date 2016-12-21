@@ -136,7 +136,7 @@ public class InteractionHandler extends AppCompatActivity implements View.OnClic
                 break;
 
             default:
-                message = "Hello...";
+                message = getResources().getString(R.string.defaultGreeting);
                 break;
         }
         tvGreeting.setText(message);

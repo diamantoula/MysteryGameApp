@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class NearbySearch {
 
     //store user's location
-    LatLng userLocation = null;
+    static LatLng userLocation = null;
 
     private static ArrayList<Location> objLocations = new ArrayList<>();
     private static ArrayList<Location> npcLocations = new ArrayList<>();
@@ -19,7 +19,7 @@ public class NearbySearch {
 
     private static final float DEFAULT_DIST = 500;
 
-    Object foundEntity = null;
+    static Object foundEntity = null;
 
     //Constructor
     NearbySearch (LatLng user){
@@ -39,7 +39,7 @@ public class NearbySearch {
     }
 
     //
-    public LatLng findEntity(){
+    public static LatLng findEntity(){
         float distToObj;
         float distToNPC;
 
@@ -73,7 +73,7 @@ public class NearbySearch {
     //return the distance between the user and the nearest entity
     // that is within a 10 meter radius from the user
     // if there is no entity within the radius return DEFAULT_DIST value
-    private float getDistance(ArrayList<Location> list, Location userLocation, String entity){
+    private static float getDistance(ArrayList<Location> list, Location userLocation, String entity){
         //default value
         float distance = DEFAULT_DIST;
         float tempDist;

@@ -29,6 +29,7 @@
     <string name="objectGreeting">You have discovered an Object...</string>
     <string name="npcGreeting">Hello Detective...</string>
     <string name="bonusGreeting">You have found a Bonus!</string>
+    <string name="defaultGreeting">Hello...</string>
 
     <string name="bonusTaken">Congratulations! You took Bonus!</string>
 
